@@ -1,5 +1,5 @@
 import { ChatGroq } from "@langchain/groq";
-import { HumanMessage, AIMessage, BaseMessage } from "@langchain/core/messages";
+import { HumanMessage, AIMessage, BaseMessage, SystemMessage } from "@langchain/core/messages";
 import { StateGraph, START, END } from "@langchain/langgraph";
 import { env } from "../../../env";
 import { NextResponse } from "next/server";
@@ -42,22 +42,32 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
+    const systemPrompt = new SystemMessage(
+      `You are an expert operations research AI designed to solve linear programming word problems, matching the objective of the NL4Opt competition dataset. 
+Your task is to take a natural language description of a linear programming (LP) problem and formulate it mathematically.
+When given a word problem, you must output:
+1. Objective: Identify the objective name and direction (e.g., Maximize Profit).
+2. Decision Variables: List the variables with clear definitions.
+3. Constraints: List all constraints mathematically using the variables.
+4. Formulation: The final mathematical meaning representation (canonical formulation).
+Be highly precise and mathematically formal.`
+    );
 
-    // Convert raw messages to Langchain message objects
-    const langchainMessages = messages.map((m: any) => {
-      if (m.sender === "user") {
-        return new HumanMessage(m.content);
-      } else {
-        return new AIMessage(m.content);
-      }
-    });
+    const langchainMessages = [
+      systemPrompt,
+      ...messages.map((m: any) => {
+        if (m.sender === "user") {
+          return new HumanMessage(m.content);
+        } else {
+          return new AIMessage(m.content);
+        }
+      })
+    ];
 
-    // Create a TransformStream to stream responses to the client
     const encoder = new TextEncoder();
     const stream = new TransformStream();
     const writer = stream.writable.getWriter();
 
-    // Start the graph execution asynchronously to allow immediate streaming
     (async () => {
       try {
         const events = await app.streamEvents(
@@ -66,7 +76,6 @@ export async function POST(req: Request) {
         );
 
         for await (const event of events) {
-          // Listen for chat model stream events
           if (event.event === "on_chat_model_stream") {
             const chunk = event.data.chunk;
             if (chunk && chunk.content) {
