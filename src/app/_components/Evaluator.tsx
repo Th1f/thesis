@@ -14,12 +14,14 @@ export function Evaluator() {
     prompt: string;
     response: string | null;
     truth: string | null;
-  }>({ prompt: "", response: null, truth: null });
+    conversation: Array<{ role: string; text: string }> | null;
+  }>({ prompt: "", response: null, truth: null, conversation: null });
   const [mismatches, setMismatches] = useState<
     Array<{
       prompt: string;
       truth: any;
       predicted: any;
+      conversation: Array<{ role: string; text: string }> | null;
     }>
   >([]);
 
@@ -78,6 +80,7 @@ export function Evaluator() {
         prompt: document,
         response: null,
         truth: JSON.stringify(truthSubset, null, 2),
+        conversation: null,
       });
 
       try {
@@ -87,29 +90,65 @@ export function Evaluator() {
           body: JSON.stringify({ document }),
         });
 
-        if (response.ok) {
-          const result = await response.json();
-          setCurrentLog({
-            prompt: document,
-            response: JSON.stringify(result, null, 2),
-            truth: JSON.stringify(truthSubset, null, 2),
-          });
-          const { tp, fp } = evaluateTask(result, task);
+        if (response.ok && response.body) {
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          let finalResultStr = "";
+          let finalResultObj: any = null;
+          let currentConversation: Array<{ role: string; text: string }> = [];
+          
+          let buffer = "";
 
-          if (fp > 0 || Object.keys(result).length === 0) {
-            setMismatches((prev) => [
-              ...prev,
-              {
-                prompt: document,
-                truth: truthSubset,
-                predicted: result,
-              },
-            ]);
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            
+            buffer = lines.pop() || "";
+
+            for (const line of lines) {
+              if (!line.trim()) continue;
+              try {
+                const data = JSON.parse(line);
+                if (data.type === "turn") {
+                  currentConversation = [...currentConversation, { role: data.role, text: data.text }];
+                  setCurrentLog(prev => ({ ...prev, conversation: currentConversation }));
+                } else if (data.type === "result") {
+                  finalResultObj = data.result;
+                  finalResultStr = JSON.stringify(data.result, null, 2);
+                  setCurrentLog(prev => ({ ...prev, response: finalResultStr }));
+                } else if (data.type === "error") {
+                  console.error("API returned error event");
+                }
+              } catch (e) {
+                console.error("Failed to parse stream chunk line:", line);
+              }
+            }
           }
 
-          currentTp += tp;
-          currentFp += fp;
-          setMetrics({ tp: currentTp, fp: currentFp });
+          if (finalResultObj) {
+            const { tp, fp } = evaluateTask(finalResultObj, task);
+  
+            if (fp > 0 || Object.keys(finalResultObj).length === 0) {
+              setMismatches((prev) => [
+                ...prev,
+                {
+                  prompt: document,
+                  truth: truthSubset,
+                  predicted: finalResultObj,
+                  conversation: currentConversation,
+                },
+              ]);
+            }
+  
+            currentTp += tp;
+            currentFp += fp;
+            setMetrics({ tp: currentTp, fp: currentFp });
+          }
+        } else if (!response.ok) {
+           console.error("Evaluation response failed", response.statusText);
         }
       } catch (e) {
         console.error("Evaluation failed for task", key, e);
@@ -335,22 +374,40 @@ export function Evaluator() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-lg bg-gray-800 p-4">
-                  <div className="mb-2 text-xs font-bold text-purple-400">
-                    Ground Truth JSON:
+                  <div className="mb-2 text-xs font-bold text-yellow-400">
+                    Agent Chat Transcript:
                   </div>
-                  <div className="custom-scrollbar max-h-60 overflow-y-auto font-mono text-xs whitespace-pre-wrap text-gray-300">
-                    {currentLog.truth ? currentLog.truth : "Loading..."}
+                  <div className="custom-scrollbar max-h-60 overflow-y-auto space-y-2 font-mono text-xs text-gray-300">
+                    {currentLog.conversation ? (
+                      currentLog.conversation.map((msg, idx) => (
+                        <div key={idx} className={`p-2 rounded ${msg.role === 'Evaluator' ? 'bg-blue-900/30 border border-blue-800/50' : 'bg-green-900/30 border border-green-800/50'}`}>
+                           <span className={`font-bold ${msg.role === 'Evaluator' ? 'text-blue-400' : 'text-green-400'}`}>{msg.role}: </span>
+                           <span className="whitespace-pre-wrap">{msg.text}</span>
+                        </div>
+                      ))
+                    ) : "Awaiting conversation..."}
                   </div>
                 </div>
 
-                <div className="rounded-lg bg-gray-800 p-4">
-                  <div className="mb-2 text-xs font-bold text-green-400">
-                    LLM JSON Response (Live Parse):
+                <div className="grid grid-rows-2 gap-4">
+                  <div className="rounded-lg bg-gray-800 p-4">
+                    <div className="mb-2 text-xs font-bold text-purple-400">
+                      Ground Truth JSON:
+                    </div>
+                    <div className="custom-scrollbar max-h-[110px] overflow-y-auto font-mono text-xs whitespace-pre-wrap text-gray-300">
+                      {currentLog.truth ? currentLog.truth : "Loading..."}
+                    </div>
                   </div>
-                  <div className="custom-scrollbar max-h-60 overflow-y-auto font-mono text-xs whitespace-pre-wrap text-gray-300">
-                    {currentLog.response
-                      ? currentLog.response
-                      : "Awaiting response..."}
+
+                  <div className="rounded-lg bg-gray-800 p-4">
+                    <div className="mb-2 text-xs font-bold text-green-400">
+                      Final JSON Response:
+                    </div>
+                    <div className="custom-scrollbar max-h-[110px] overflow-y-auto font-mono text-xs whitespace-pre-wrap text-gray-300">
+                      {currentLog.response
+                        ? currentLog.response
+                        : "Awaiting response..."}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -378,8 +435,23 @@ export function Evaluator() {
                         {mismatch.prompt}
                       </span>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="col-span-1">
+                        <div className="mb-2 text-xs font-bold text-yellow-400">
+                          Transcript:
+                        </div>
+                        <div className="custom-scrollbar max-h-60 space-y-2 overflow-y-auto rounded bg-gray-900 p-2 font-mono text-xs text-gray-300">
+                          {mismatch.conversation ? (
+                            mismatch.conversation.map((msg, idx) => (
+                              <div key={idx} className={`p-1 rounded ${msg.role === 'Evaluator' ? 'bg-blue-900/20' : 'bg-green-900/20'}`}>
+                                 <span className={`font-bold ${msg.role === 'Evaluator' ? 'text-blue-400' : 'text-green-400'}`}>{msg.role}: </span>
+                                 <span className="whitespace-pre-wrap">{msg.text}</span>
+                              </div>
+                            ))
+                          ) : "No transcript available"}
+                        </div>
+                      </div>
+                      <div className="col-span-1">
                         <div className="mb-2 text-xs font-bold text-purple-400">
                           Ground Truth:
                         </div>
@@ -387,7 +459,7 @@ export function Evaluator() {
                           {JSON.stringify(mismatch.truth, null, 2)}
                         </div>
                       </div>
-                      <div>
+                      <div className="col-span-1">
                         <div className="mb-2 text-xs font-bold text-red-400">
                           Predicted (LLM) - Highlights:
                         </div>
