@@ -21,6 +21,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@langchain/cerebras": "^1.0.4",
     "@langchain/core": "^1.1.31",
     "@langchain/groq": "^1.1.4",
     "@langchain/langgraph": "^1.2.2",

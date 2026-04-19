@@ -159,6 +159,63 @@ export function Evaluator() {
     setIsEvaluating(false);
   };
 
+  const STOPWORDS = new Set([
+    "the","a","an","of","in","by","for","to","at","on","with","from","per",
+    "each","made","produced","grown","invested","trips","trip","amount",
+    "number","quantity","total","count","units","unit","hectares","hectare",
+    "acres","acre","production","manufacturing",
+  ]);
+
+  const normalizeVarName = (name: string): string =>
+    name
+      .replace(/_/g, " ")
+      .toLowerCase()
+      .replace(/\b(the|a|an)\s+/gi, "")
+      .replace(/\b(number|amount|quantity|count|total|units?|hectares?|acres?|production|trips?)\s*(of\s+)?/gi, "")
+      .replace(/\b(invested\s+in(\s+the)?|grown|made\s+by|produced\s+by)\b/gi, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const tokenize = (s: string): Set<string> =>
+    new Set(s.split(/\s+/).filter((t) => t.length > 1 && !STOPWORDS.has(t)));
+
+  const varNamesMatch = (a: string, b: string): boolean => {
+    if (!a || !b) return false;
+    if (a.toLowerCase() === b.toLowerCase()) return true;
+    const na = normalizeVarName(a);
+    const nb = normalizeVarName(b);
+    if (na === nb) return true;
+    const ta = tokenize(na);
+    const tb = tokenize(nb);
+    if (ta.size === 0 || tb.size === 0) return false;
+    const intersection = [...ta].filter((t) => tb.has(t)).length;
+    const union = new Set([...ta, ...tb]).size;
+    if (union > 0 && intersection / union >= 0.5) return true;
+    const [shorter, longer] = ta.size <= tb.size ? [ta, tb] : [tb, ta];
+    return shorter.size > 0 && [...shorter].every((t) => longer.has(t));
+  };
+
+  const XY_LIKE = new Set(["xy", "xby", "ratio"]);
+
+  const limitsMatch = (a: any, b: any): boolean =>
+    String(a ?? "").replace(/[$%,]/g, "").trim() ===
+    String(b ?? "").replace(/[$%,]/g, "").trim();
+
+  const constraintsMatch = (tc: any, pc: any): boolean => {
+    const tcXy = XY_LIKE.has(tc.type);
+    const pcXy = XY_LIKE.has(pc.type);
+    if (tcXy !== pcXy) return false;
+    if (tcXy) {
+      return (
+        tc.operator === pc.operator &&
+        varNamesMatch(tc.x_var, pc.x_var) &&
+        varNamesMatch(tc.y_var, pc.y_var)
+      );
+    }
+    if (tc.type !== pc.type) return false;
+    return tc.operator === pc.operator && limitsMatch(tc.limit, pc.limit);
+  };
+
   const evaluateTask = (predicted: any, truth: any) => {
     let tp = 0;
     let fp = 0;
@@ -169,22 +226,7 @@ export function Evaluator() {
     const mismatchedConstraints: any[] = [];
 
     predConsts.forEach((pc: any) => {
-      const match = truthConsts.find((tc: any) => {
-        if (tc.type !== pc.type) return false;
-
-        if (tc.type === "xy") {
-          return (
-            tc.operator === pc.operator &&
-            tc.x_var === pc.x_var &&
-            tc.y_var === pc.y_var
-          );
-        } else {
-          // Default to linear
-          const predLimit = String(pc.limit).trim();
-          const truthLimit = String(tc.limit).trim();
-          return tc.operator === pc.operator && truthLimit === predLimit;
-        }
-      });
+      const match = truthConsts.find((tc: any) => constraintsMatch(tc, pc));
       if (match) {
         tp += 1;
         matchedConstraints.push(pc);
@@ -239,21 +281,9 @@ export function Evaluator() {
         <div className="pl-4">
           <span className="text-blue-300">"const_declarations":</span> [
           {predicted.const_declarations?.map((pc: any, idx: number) => {
-            const isMatch = matchData.matchedConstraints.some((mc: any) => {
-              if (mc.type === "xy") {
-                return (
-                  mc.operator === pc.operator &&
-                  mc.x_var === pc.x_var &&
-                  mc.y_var === pc.y_var &&
-                  mc.type === pc.type
-                );
-              }
-              return (
-                mc.limit === pc.limit &&
-                mc.operator === pc.operator &&
-                mc.type === pc.type
-              );
-            });
+            const isMatch = matchData.matchedConstraints.some((mc: any) =>
+              constraintsMatch(mc, pc),
+            );
             const constColor = isMatch
               ? "border-green-500/50 bg-green-900/20"
               : "border-red-500/50 bg-red-900/20";
@@ -285,6 +315,35 @@ export function Evaluator() {
     metrics.tp + metrics.fp > 0
       ? (metrics.tp / (metrics.tp + metrics.fp)) * 100
       : 0;
+
+  const downloadResults = () => {
+    const results = {
+      summary: {
+        timestamp: new Date().toISOString(),
+        total_items: totalItems,
+        true_positives: metrics.tp,
+        false_positives: metrics.fp,
+        precision_percent: parseFloat(precision.toFixed(2)),
+      },
+      mismatches: mismatches.map((m, idx) => ({
+        index: idx + 1,
+        prompt: m.prompt,
+        ground_truth: m.truth,
+        predicted: m.predicted,
+        conversation: m.conversation,
+      })),
+    };
+
+    const blob = new Blob([JSON.stringify(results, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `eval_results_${new Date().toISOString().replace(/[:.]/g, "-")}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="mt-4 mb-4 flex w-full max-w-6xl flex-col items-center rounded-xl border border-gray-700 bg-gray-800/60 p-6 shadow-lg backdrop-blur-sm transition-all duration-1000 ease-in-out">
@@ -355,6 +414,18 @@ export function Evaluator() {
               </div>
             </div>
           </div>
+
+          {/* Download Results */}
+          {!isEvaluating && progress === totalItems && (
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={downloadResults}
+                className="rounded-lg bg-green-700 px-5 py-2 font-bold text-white shadow shadow-green-500/30 transition-all hover:bg-green-600"
+              >
+                Download Results (JSON)
+              </button>
+            </div>
+          )}
 
           {/* Live Evaluation Log */}
           {currentLog.prompt && (

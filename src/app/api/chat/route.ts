@@ -1,4 +1,4 @@
-import { ChatGroq } from "@langchain/groq";
+import { ChatCerebras } from "@langchain/cerebras";
 import { HumanMessage, AIMessage, BaseMessage, SystemMessage } from "@langchain/core/messages";
 import { StateGraph, START, END } from "@langchain/langgraph";
 import { env } from "../../../env";
@@ -8,9 +8,9 @@ import { NextResponse } from "next/server";
 interface State {
   messages: BaseMessage[];
 }
-const model = new ChatGroq({
-  apiKey: env.GROQ_API_KEY,
-  model: "llama-3.1-8b-instant", // Use a fast and standard model
+const model = new ChatCerebras({
+  apiKey: env.CEREBRAS_API_KEY,
+  model: "llama3.1-8b",
   temperature: 0.7,
 });
 

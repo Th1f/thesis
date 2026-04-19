@@ -12,6 +12,12 @@ export default async function Home() {
             <h1 className="mb-4 mt-8 text-6xl font-bold transition-all duration-1000 ease-in-out">
               Thesis App
             </h1>
+            <Link
+              href="/solver"
+              className="mb-2 rounded-xl border border-blue-500/50 bg-blue-600/20 px-6 py-3 text-sm font-semibold text-blue-300 transition-all hover:bg-blue-600/40 hover:text-white"
+            >
+              ✦ Try the New Multi-Agent LP Solver →
+            </Link>
           </div>
           <Evaluator />
           <ChatPanel />
