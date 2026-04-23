@@ -1,6 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { api } from "~/trpc/react";
+import {
+  evaluateTask,
+  renderHighlightedJSON,
+  constraintsMatch,
+} from "./evalUtils";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Metrics {
@@ -9,10 +15,10 @@ interface Metrics {
   fn: number;
 }
 
-interface Mismatch {
+interface MismatchEntry {
   prompt: string;
-  truth: any;
-  predicted: any;
+  truth: Record<string, unknown>;
+  predicted: Record<string, unknown>;
   conversation: Array<{ role: string; text: string }> | null;
 }
 
@@ -23,180 +29,21 @@ interface CurrentLog {
   conversation: Array<{ role: string; text: string }> | null;
 }
 
-// ─── Variable-name matching ───────────────────────────────────────────────────
-const STOPWORDS = new Set([
-  "the","a","an","of","in","by","for","to","at","on","with","from","per",
-  "each","made","produced","grown","invested","trips","trip","amount",
-  "number","quantity","total","count","units","unit","hectares","hectare",
-  "acres","acre","production","manufacturing",
-]);
-
-function normalizeVarName(name: string): string {
-  return name
-    .replace(/_/g, " ")
-    .toLowerCase()
-    .replace(/\b(the|a|an)\s+/gi, "")
-    .replace(/\b(number|amount|quantity|count|total|units?|hectares?|acres?|production|trips?)\s*(of\s+)?/gi, "")
-    .replace(/\b(invested\s+in(\s+the)?|grown|made\s+by|produced\s+by)\b/gi, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function tokenize(s: string): Set<string> {
-  return new Set(s.split(/\s+/).filter((t) => t.length > 1 && !STOPWORDS.has(t)));
-}
-
-function varNamesMatch(a: string, b: string): boolean {
-  if (!a || !b) return false;
-  if (a.toLowerCase() === b.toLowerCase()) return true;
-  const na = normalizeVarName(a);
-  const nb = normalizeVarName(b);
-  if (na === nb) return true;
-  const ta = tokenize(na);
-  const tb = tokenize(nb);
-  if (ta.size === 0 || tb.size === 0) return false;
-  const intersection = [...ta].filter((t) => tb.has(t)).length;
-  const union = new Set([...ta, ...tb]).size;
-  // Jaccard threshold
-  if (union > 0 && intersection / union >= 0.5) return true;
-  // Subset check: all tokens of the shorter name appear in the longer
-  const [shorter, longer] = ta.size <= tb.size ? [ta, tb] : [tb, ta];
-  return shorter.size > 0 && [...shorter].every((t) => longer.has(t));
-}
-
-// ─── Constraint matching ──────────────────────────────────────────────────────
-const XY_LIKE = new Set(["xy", "xby", "ratio"]);
-
-function limitsMatch(a: any, b: any): boolean {
-  return String(a ?? "").replace(/[$%,]/g, "").trim() ===
-         String(b ?? "").replace(/[$%,]/g, "").trim();
-}
-
-function constraintsMatch(tc: any, pc: any): boolean {
-  const tcXy = XY_LIKE.has(tc.type);
-  const pcXy = XY_LIKE.has(pc.type);
-  if (tcXy !== pcXy) return false;
-  if (tcXy) {
-    // xy / xby / ratio all match on operator + variable pair
-    return (
-      tc.operator === pc.operator &&
-      varNamesMatch(tc.x_var, pc.x_var) &&
-      varNamesMatch(tc.y_var, pc.y_var)
-    );
-  }
-  if (tc.type !== pc.type) return false;
-  return tc.operator === pc.operator && limitsMatch(tc.limit, pc.limit);
-}
-
-// ─── Evaluation helpers (identical formula to baseline Evaluator) ─────────────
-function evaluateTask(
-  predicted: any,
-  truth: any,
-): {
+interface CaseResult {
+  caseIndex: number;
+  problemText: string;
+  hasMismatch: boolean;
   tp: number;
   fp: number;
   fn: number;
-  matchedConstraints: any[];
-  mismatchedConstraints: any[];
-  isObjMatched: boolean;
-} {
-  let tp = 0;
-  let fp = 0;
-  let fn = 0;
-
-  const truthConsts: any[] = truth.const_declarations ?? [];
-  const predConsts: any[] = predicted.const_declarations ?? [];
-  const matchedConstraints: any[] = [];
-  const mismatchedConstraints: any[] = [];
-
-  predConsts.forEach((pc: any) => {
-    const match = truthConsts.find((tc: any) => constraintsMatch(tc, pc));
-    if (match) {
-      tp += 1;
-      matchedConstraints.push(pc);
-    } else {
-      fp += 1;
-      mismatchedConstraints.push(pc);
-    }
-  });
-
-  // Count missed ground-truth constraints (false negatives)
-  truthConsts.forEach((tc: any) => {
-    const found = predConsts.some((pc: any) => constraintsMatch(tc, pc));
-    if (!found) fn += 1;
-  });
-
-  let isObjMatched = false;
-  if (
-    predicted.obj_declaration?.direction &&
-    truth.obj_declaration?.direction &&
-    predicted.obj_declaration.direction.toLowerCase() ===
-      truth.obj_declaration.direction.toLowerCase()
-  ) {
-    tp += 1;
-    isObjMatched = true;
-  } else {
-    fp += 1;
-  }
-
-  return { tp, fp, fn, matchedConstraints, mismatchedConstraints, isObjMatched };
-}
-
-function renderHighlightedJSON(predicted: any, matchData: any) {
-  if (!predicted || Object.keys(predicted).length === 0) return "{ }";
-  const objDirection = predicted.obj_declaration?.direction ?? "missing";
-  const objColor = matchData.isObjMatched ? "text-green-400" : "text-red-400";
-
-  return (
-    <div className="flex flex-col gap-2">
-      <span className="text-gray-400">{"{"}</span>
-      <div className="pl-4">
-        <span className="text-blue-300">"obj_declaration":</span> {"{"}
-        <div className="pl-4">
-          <span className="text-blue-300">"direction":</span>{" "}
-          <span className={objColor}>"{objDirection}"</span>
-          <div className="text-[10px] italic text-gray-500">
-            // Objective direction {matchData.isObjMatched ? "matched ✓" : "mismatched ✗"}
-          </div>
-        </div>
-        <span className="text-gray-400">{"}, "}</span>
-      </div>
-      <div className="pl-4">
-        <span className="text-blue-300">"const_declarations":</span> [
-        {(predicted.const_declarations ?? []).map((pc: any, idx: number) => {
-          const isMatch = matchData.matchedConstraints.some((mc: any) =>
-            constraintsMatch(mc, pc),
-          );
-          return (
-            <div
-              key={idx}
-              className={`my-1 rounded-r border-l-2 p-2 pl-4 ${
-                isMatch
-                  ? "border-green-500/50 bg-green-900/20"
-                  : "border-red-500/50 bg-red-900/20"
-              }`}
-            >
-              <span className={isMatch ? "text-green-300" : "text-red-300"}>
-                {JSON.stringify(pc, null, 2)}
-              </span>
-              <div
-                className={`mt-1 text-[10px] italic ${isMatch ? "text-green-500" : "text-red-500"}`}
-              >
-                // {isMatch ? "Match ✓" : "Mismatch ✗"}
-              </div>
-            </div>
-          );
-        })}
-        ]
-      </div>
-      <span className="text-gray-400">{"}"}</span>
-    </div>
-  );
+  groundTruth: string;
+  predicted: string;
+  messages: Array<{ role: string; text: string }>;
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export function SolverEvaluator() {
-  const [fileContent, setFileContent] = useState<Record<string, any> | null>(null);
+  const [fileContent, setFileContent] = useState<Record<string, Record<string, unknown>> | null>(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [progress, setProgress] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
@@ -207,7 +54,13 @@ export function SolverEvaluator() {
     truth: null,
     conversation: null,
   });
-  const [mismatches, setMismatches] = useState<Mismatch[]>([]);
+  const [mismatches, setMismatches] = useState<MismatchEntry[]>([]);
+  const [allCases, setAllCases] = useState<CaseResult[]>([]);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const saveRun = api.testHistory.saveRun.useMutation({
+    onSuccess: () => setIsSaved(true),
+  });
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -216,16 +69,17 @@ export function SolverEvaluator() {
     reader.onload = (ev) => {
       const text = ev.target?.result as string;
       try {
-        let content: Record<string, any> = {};
+        let content: Record<string, Record<string, unknown>> = {};
         if (file.name.endsWith(".jsonl")) {
           text.split(/\r?\n/).filter(Boolean).forEach((line) => {
-            Object.assign(content, JSON.parse(line));
+            Object.assign(content, JSON.parse(line) as Record<string, unknown>);
           });
         } else {
-          content = JSON.parse(text);
+          content = JSON.parse(text) as Record<string, Record<string, unknown>>;
         }
         setFileContent(content);
         setTotalItems(Object.keys(content).length);
+        setIsSaved(false);
       } catch {
         alert("Invalid file format");
       }
@@ -239,14 +93,17 @@ export function SolverEvaluator() {
     setProgress(0);
     setMetrics({ tp: 0, fp: 0, fn: 0 });
     setMismatches([]);
+    setAllCases([]);
+    setIsSaved(false);
 
     let cTp = 0, cFp = 0, cFn = 0;
+    const casesBuffer: CaseResult[] = [];
     const keys = Object.keys(fileContent);
 
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i]!;
-      const task = fileContent[key];
-      const document: string = task.document;
+      const task = fileContent[key]!;
+      const document = task.document as string;
       const truthSubset = {
         obj_declaration: task.obj_declaration,
         const_declarations: task.const_declarations,
@@ -259,6 +116,9 @@ export function SolverEvaluator() {
         conversation: null,
       });
 
+      let conversation: Array<{ role: string; text: string }> = [];
+      let finalResult: Record<string, unknown> | null = null;
+
       try {
         const res = await fetch("/api/solver/evaluate", {
           method: "POST",
@@ -270,8 +130,6 @@ export function SolverEvaluator() {
           const reader = res.body.getReader();
           const decoder = new TextDecoder();
           let buffer = "";
-          let conversation: Array<{ role: string; text: string }> = [];
-          let finalResult: any = null;
 
           while (true) {
             const { value, done } = await reader.read();
@@ -283,12 +141,12 @@ export function SolverEvaluator() {
             for (const line of lines) {
               if (!line.trim()) continue;
               try {
-                const event = JSON.parse(line);
+                const event = JSON.parse(line) as { type: string; role?: string; text?: string; result?: Record<string, unknown> };
                 if (event.type === "turn") {
-                  conversation = [...conversation, { role: event.role, text: event.text }];
+                  conversation = [...conversation, { role: event.role!, text: event.text! }];
                   setCurrentLog((prev) => ({ ...prev, conversation }));
                 } else if (event.type === "result") {
-                  finalResult = event.result;
+                  finalResult = event.result!;
                   setCurrentLog((prev) => ({
                     ...prev,
                     response: JSON.stringify(finalResult, null, 2),
@@ -297,44 +155,61 @@ export function SolverEvaluator() {
               } catch {}
             }
           }
-
-          if (finalResult) {
-            const { tp, fp, fn } = evaluateTask(finalResult, task);
-            if (fp > 0 || fn > 0 || Object.keys(finalResult).length === 0) {
-              setMismatches((prev) => [
-                ...prev,
-                { prompt: document, truth: truthSubset, predicted: finalResult, conversation },
-              ]);
-            }
-            cTp += tp;
-            cFp += fp;
-            cFn += fn;
-            setMetrics({ tp: cTp, fp: cFp, fn: cFn });
-          }
         }
       } catch (err) {
         console.error("Evaluation failed for task", key, err);
       }
 
+      const result = finalResult ?? {};
+      const { tp, fp, fn } = evaluateTask(result, truthSubset as Record<string, unknown>);
+      const hasMismatch = fp > 0 || fn > 0 || Object.keys(result).length === 0;
+
+      if (hasMismatch) {
+        setMismatches((prev) => [
+          ...prev,
+          {
+            prompt: document,
+            truth: truthSubset as Record<string, unknown>,
+            predicted: result,
+            conversation,
+          },
+        ]);
+      }
+
+      casesBuffer.push({
+        caseIndex: i,
+        problemText: document,
+        hasMismatch,
+        tp,
+        fp,
+        fn,
+        groundTruth: JSON.stringify(truthSubset),
+        predicted: JSON.stringify(result),
+        messages: conversation,
+      });
+
+      cTp += tp;
+      cFp += fp;
+      cFn += fn;
+      setMetrics({ tp: cTp, fp: cFp, fn: cFn });
       setProgress(i + 1);
     }
 
+    setAllCases(casesBuffer);
     setIsEvaluating(false);
   };
 
   const downloadResults = () => {
-    const precision = cTp + cFp > 0 ? ((cTp / (cTp + cFp)) * 100).toFixed(2) : "0.00";
-    const recall = cTp + cFn > 0 ? ((cTp / (cTp + cFn)) * 100).toFixed(2) : "0.00";
     const results = {
       summary: {
         timestamp: new Date().toISOString(),
         system: "multi-agent-v2",
         total_items: totalItems,
-        true_positives: metrics.tp,
-        false_positives: metrics.fp,
-        false_negatives: metrics.fn,
-        precision_percent: parseFloat(precision),
-        recall_percent: parseFloat(recall),
+        true_positives: cTp,
+        false_positives: cFp,
+        false_negatives: cFn,
+        precision_percent: parseFloat(precision.toFixed(2)),
+        recall_percent: parseFloat(recall.toFixed(2)),
       },
       mismatches: mismatches.map((m, idx) => ({
         index: idx + 1,
@@ -357,6 +232,8 @@ export function SolverEvaluator() {
   const precision = cTp + cFp > 0 ? (cTp / (cTp + cFp)) * 100 : 0;
   const recall    = cTp + cFn > 0 ? (cTp / (cTp + cFn)) * 100 : 0;
   const f1        = precision + recall > 0 ? (2 * precision * recall) / (precision + recall) : 0;
+
+  const isDone = !isEvaluating && progress > 0 && progress === totalItems;
 
   return (
     <div className="mt-4 mb-4 flex w-full max-w-6xl flex-col items-center rounded-xl border border-gray-700 bg-gray-800/60 p-6 shadow-lg backdrop-blur-sm">
@@ -434,15 +311,39 @@ export function SolverEvaluator() {
             </div>
           </div>
 
-          {/* Download */}
-          {!isEvaluating && progress === totalItems && (
-            <div className="mt-4 flex justify-end">
+          {/* Action buttons */}
+          {isDone && (
+            <div className="mt-4 flex items-center justify-end gap-3">
               <button
                 onClick={downloadResults}
                 className="rounded-lg bg-green-700 px-5 py-2 font-bold text-white shadow shadow-green-500/30 transition-all hover:bg-green-600"
               >
                 Download Results (JSON)
               </button>
+              {!isSaved ? (
+                <button
+                  onClick={() =>
+                    saveRun.mutate({
+                      totalCases: totalItems,
+                      tp: cTp,
+                      fp: cFp,
+                      fn: cFn,
+                      precision,
+                      recall,
+                      f1,
+                      testCases: allCases,
+                    })
+                  }
+                  disabled={saveRun.isPending}
+                  className="rounded-lg bg-purple-600 px-5 py-2 font-bold text-white shadow shadow-purple-500/30 transition-all hover:bg-purple-700 disabled:opacity-50"
+                >
+                  {saveRun.isPending ? "Saving…" : "Save to History"}
+                </button>
+              ) : (
+                <span className="rounded-lg border border-green-600 bg-green-900/30 px-5 py-2 text-sm font-semibold text-green-400">
+                  Saved to History ✓
+                </span>
+              )}
             </div>
           )}
 
@@ -470,11 +371,7 @@ export function SolverEvaluator() {
                               : "bg-green-900/30 border border-green-800/40"
                           }`}
                         >
-                          <span
-                            className={`font-bold ${
-                              msg.role === "Evaluator" ? "text-blue-400" : "text-green-400"
-                            }`}
-                          >
+                          <span className={`font-bold ${msg.role === "Evaluator" ? "text-blue-400" : "text-green-400"}`}>
                             {msg.role}:{" "}
                           </span>
                           <span className="whitespace-pre-wrap">{msg.text}</span>
@@ -504,7 +401,7 @@ export function SolverEvaluator() {
           )}
 
           {/* Mismatches */}
-          {!isEvaluating && mismatches.length > 0 && (
+          {isDone && mismatches.length > 0 && (
             <div className="mt-6 w-full rounded-xl border border-red-900/50 bg-gray-900/80 p-5 text-left shadow-inner">
               <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-red-500">
                 Mismatches ({mismatches.length})
@@ -524,15 +421,9 @@ export function SolverEvaluator() {
                             m.conversation.map((msg, i) => (
                               <div
                                 key={i}
-                                className={`rounded p-1 ${
-                                  msg.role === "Evaluator" ? "bg-blue-900/20" : "bg-green-900/20"
-                                }`}
+                                className={`rounded p-1 ${msg.role === "Evaluator" ? "bg-blue-900/20" : "bg-green-900/20"}`}
                               >
-                                <span
-                                  className={`font-bold ${
-                                    msg.role === "Evaluator" ? "text-blue-400" : "text-green-400"
-                                  }`}
-                                >
+                                <span className={`font-bold ${msg.role === "Evaluator" ? "text-blue-400" : "text-green-400"}`}>
                                   {msg.role}:{" "}
                                 </span>
                                 <span className="whitespace-pre-wrap">{msg.text}</span>
@@ -550,14 +441,9 @@ export function SolverEvaluator() {
                         </div>
                       </div>
                       <div>
-                        <div className="mb-1 text-xs font-bold text-red-400">
-                          Predicted — Highlights:
-                        </div>
+                        <div className="mb-1 text-xs font-bold text-red-400">Predicted — Highlights:</div>
                         <div className="custom-scrollbar max-h-52 overflow-y-auto rounded bg-gray-900 p-2 font-mono text-xs text-gray-300">
-                          {renderHighlightedJSON(
-                            m.predicted,
-                            evaluateTask(m.predicted, m.truth),
-                          )}
+                          {renderHighlightedJSON(m.predicted, evaluateTask(m.predicted, m.truth))}
                         </div>
                       </div>
                     </div>

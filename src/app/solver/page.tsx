@@ -4,8 +4,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { SolverChat } from "../_components/SolverChat";
 import { SolverEvaluator } from "../_components/SolverEvaluator";
+import { TestHistory } from "../_components/TestHistory";
 
-type Tab = "solve" | "test";
+type Tab = "solve" | "test" | "history";
 
 export default function SolverPage() {
   const [tab, setTab] = useState<Tab>("solve");
@@ -68,14 +69,22 @@ export default function SolverPage() {
         >
           Accuracy Testing (TP / (TP + FP))
         </button>
+        <button
+          onClick={() => setTab("history")}
+          className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all ${
+            tab === "history"
+              ? "bg-purple-600 text-white shadow"
+              : "text-gray-400 hover:text-white"
+          }`}
+        >
+          Test History
+        </button>
       </div>
 
       {/* Tab Content */}
-      {tab === "solve" ? (
-        <SolverChat />
-      ) : (
-        <SolverEvaluator />
-      )}
+      {tab === "solve" && <SolverChat />}
+      {tab === "test" && <SolverEvaluator />}
+      {tab === "history" && <TestHistory />}
     </main>
   );
 }

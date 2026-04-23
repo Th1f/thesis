@@ -19,3 +19,40 @@ model Post {
 
   @@index([name])
 }
+
+model TestRun {
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  totalCases Int
+  tp         Int
+  fp         Int
+  fn         Int
+  precision  Float
+  recall     Float
+  f1         Float
+  testCases  TestCase[]
+}
+
+model TestCase {
+  id          Int                   @id @default(autoincrement())
+  testRunId   Int
+  testRun     TestRun               @relation(fields: [testRunId], references: [id], onDelete: Cascade)
+  caseIndex   Int
+  problemText String
+  hasMismatch Boolean
+  tp          Int
+  fp          Int
+  fn          Int
+  groundTruth String
+  predicted   String
+  messages    ConversationMessage[]
+}
+
+model ConversationMessage {
+  id         Int      @id @default(autoincrement())
+  testCaseId Int
+  testCase   TestCase @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  msgOrder   Int
+  role       String
+  content    String
+}

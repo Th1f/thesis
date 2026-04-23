@@ -18,6 +18,21 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
+/**
+ * Model TestRun
+ * 
+ */
+export type TestRun = $Result.DefaultSelection<Prisma.$TestRunPayload>
+/**
+ * Model TestCase
+ * 
+ */
+export type TestCase = $Result.DefaultSelection<Prisma.$TestCasePayload>
+/**
+ * Model ConversationMessage
+ * 
+ */
+export type ConversationMessage = $Result.DefaultSelection<Prisma.$ConversationMessagePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -146,6 +161,36 @@ export class PrismaClient<
     * ```
     */
   get post(): Prisma.PostDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.testRun`: Exposes CRUD operations for the **TestRun** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TestRuns
+    * const testRuns = await prisma.testRun.findMany()
+    * ```
+    */
+  get testRun(): Prisma.TestRunDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.testCase`: Exposes CRUD operations for the **TestCase** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TestCases
+    * const testCases = await prisma.testCase.findMany()
+    * ```
+    */
+  get testCase(): Prisma.TestCaseDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.conversationMessage`: Exposes CRUD operations for the **ConversationMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ConversationMessages
+    * const conversationMessages = await prisma.conversationMessage.findMany()
+    * ```
+    */
+  get conversationMessage(): Prisma.ConversationMessageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -587,7 +632,10 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Post: 'Post'
+    Post: 'Post',
+    TestRun: 'TestRun',
+    TestCase: 'TestCase',
+    ConversationMessage: 'ConversationMessage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -606,7 +654,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post"
+      modelProps: "post" | "testRun" | "testCase" | "conversationMessage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -681,6 +729,228 @@ export namespace Prisma {
           count: {
             args: Prisma.PostCountArgs<ExtArgs>
             result: $Utils.Optional<PostCountAggregateOutputType> | number
+          }
+        }
+      }
+      TestRun: {
+        payload: Prisma.$TestRunPayload<ExtArgs>
+        fields: Prisma.TestRunFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TestRunFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TestRunFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>
+          }
+          findFirst: {
+            args: Prisma.TestRunFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TestRunFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>
+          }
+          findMany: {
+            args: Prisma.TestRunFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>[]
+          }
+          create: {
+            args: Prisma.TestRunCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>
+          }
+          createMany: {
+            args: Prisma.TestRunCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TestRunCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>[]
+          }
+          delete: {
+            args: Prisma.TestRunDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>
+          }
+          update: {
+            args: Prisma.TestRunUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>
+          }
+          deleteMany: {
+            args: Prisma.TestRunDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TestRunUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TestRunUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>[]
+          }
+          upsert: {
+            args: Prisma.TestRunUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestRunPayload>
+          }
+          aggregate: {
+            args: Prisma.TestRunAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTestRun>
+          }
+          groupBy: {
+            args: Prisma.TestRunGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TestRunGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TestRunCountArgs<ExtArgs>
+            result: $Utils.Optional<TestRunCountAggregateOutputType> | number
+          }
+        }
+      }
+      TestCase: {
+        payload: Prisma.$TestCasePayload<ExtArgs>
+        fields: Prisma.TestCaseFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TestCaseFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TestCaseFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>
+          }
+          findFirst: {
+            args: Prisma.TestCaseFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TestCaseFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>
+          }
+          findMany: {
+            args: Prisma.TestCaseFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>[]
+          }
+          create: {
+            args: Prisma.TestCaseCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>
+          }
+          createMany: {
+            args: Prisma.TestCaseCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TestCaseCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>[]
+          }
+          delete: {
+            args: Prisma.TestCaseDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>
+          }
+          update: {
+            args: Prisma.TestCaseUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>
+          }
+          deleteMany: {
+            args: Prisma.TestCaseDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TestCaseUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TestCaseUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>[]
+          }
+          upsert: {
+            args: Prisma.TestCaseUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TestCasePayload>
+          }
+          aggregate: {
+            args: Prisma.TestCaseAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTestCase>
+          }
+          groupBy: {
+            args: Prisma.TestCaseGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TestCaseGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TestCaseCountArgs<ExtArgs>
+            result: $Utils.Optional<TestCaseCountAggregateOutputType> | number
+          }
+        }
+      }
+      ConversationMessage: {
+        payload: Prisma.$ConversationMessagePayload<ExtArgs>
+        fields: Prisma.ConversationMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ConversationMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ConversationMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.ConversationMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ConversationMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>
+          }
+          findMany: {
+            args: Prisma.ConversationMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>[]
+          }
+          create: {
+            args: Prisma.ConversationMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>
+          }
+          createMany: {
+            args: Prisma.ConversationMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ConversationMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.ConversationMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>
+          }
+          update: {
+            args: Prisma.ConversationMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.ConversationMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ConversationMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ConversationMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>[]
+          }
+          upsert: {
+            args: Prisma.ConversationMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversationMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.ConversationMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateConversationMessage>
+          }
+          groupBy: {
+            args: Prisma.ConversationMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ConversationMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ConversationMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<ConversationMessageCountAggregateOutputType> | number
           }
         }
       }
@@ -781,6 +1051,9 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     post?: PostOmit
+    testRun?: TestRunOmit
+    testCase?: TestCaseOmit
+    conversationMessage?: ConversationMessageOmit
   }
 
   /* Types for Logging */
@@ -855,6 +1128,67 @@ export namespace Prisma {
    * Count Types
    */
 
+
+  /**
+   * Count Type TestRunCountOutputType
+   */
+
+  export type TestRunCountOutputType = {
+    testCases: number
+  }
+
+  export type TestRunCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    testCases?: boolean | TestRunCountOutputTypeCountTestCasesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TestRunCountOutputType without action
+   */
+  export type TestRunCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRunCountOutputType
+     */
+    select?: TestRunCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TestRunCountOutputType without action
+   */
+  export type TestRunCountOutputTypeCountTestCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TestCaseWhereInput
+  }
+
+
+  /**
+   * Count Type TestCaseCountOutputType
+   */
+
+  export type TestCaseCountOutputType = {
+    messages: number
+  }
+
+  export type TestCaseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    messages?: boolean | TestCaseCountOutputTypeCountMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TestCaseCountOutputType without action
+   */
+  export type TestCaseCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCaseCountOutputType
+     */
+    select?: TestCaseCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TestCaseCountOutputType without action
+   */
+  export type TestCaseCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversationMessageWhereInput
+  }
 
 
   /**
@@ -1878,6 +2212,3497 @@ export namespace Prisma {
 
 
   /**
+   * Model TestRun
+   */
+
+  export type AggregateTestRun = {
+    _count: TestRunCountAggregateOutputType | null
+    _avg: TestRunAvgAggregateOutputType | null
+    _sum: TestRunSumAggregateOutputType | null
+    _min: TestRunMinAggregateOutputType | null
+    _max: TestRunMaxAggregateOutputType | null
+  }
+
+  export type TestRunAvgAggregateOutputType = {
+    id: number | null
+    totalCases: number | null
+    tp: number | null
+    fp: number | null
+    fn: number | null
+    precision: number | null
+    recall: number | null
+    f1: number | null
+  }
+
+  export type TestRunSumAggregateOutputType = {
+    id: number | null
+    totalCases: number | null
+    tp: number | null
+    fp: number | null
+    fn: number | null
+    precision: number | null
+    recall: number | null
+    f1: number | null
+  }
+
+  export type TestRunMinAggregateOutputType = {
+    id: number | null
+    createdAt: Date | null
+    totalCases: number | null
+    tp: number | null
+    fp: number | null
+    fn: number | null
+    precision: number | null
+    recall: number | null
+    f1: number | null
+  }
+
+  export type TestRunMaxAggregateOutputType = {
+    id: number | null
+    createdAt: Date | null
+    totalCases: number | null
+    tp: number | null
+    fp: number | null
+    fn: number | null
+    precision: number | null
+    recall: number | null
+    f1: number | null
+  }
+
+  export type TestRunCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    totalCases: number
+    tp: number
+    fp: number
+    fn: number
+    precision: number
+    recall: number
+    f1: number
+    _all: number
+  }
+
+
+  export type TestRunAvgAggregateInputType = {
+    id?: true
+    totalCases?: true
+    tp?: true
+    fp?: true
+    fn?: true
+    precision?: true
+    recall?: true
+    f1?: true
+  }
+
+  export type TestRunSumAggregateInputType = {
+    id?: true
+    totalCases?: true
+    tp?: true
+    fp?: true
+    fn?: true
+    precision?: true
+    recall?: true
+    f1?: true
+  }
+
+  export type TestRunMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    totalCases?: true
+    tp?: true
+    fp?: true
+    fn?: true
+    precision?: true
+    recall?: true
+    f1?: true
+  }
+
+  export type TestRunMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    totalCases?: true
+    tp?: true
+    fp?: true
+    fn?: true
+    precision?: true
+    recall?: true
+    f1?: true
+  }
+
+  export type TestRunCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    totalCases?: true
+    tp?: true
+    fp?: true
+    fn?: true
+    precision?: true
+    recall?: true
+    f1?: true
+    _all?: true
+  }
+
+  export type TestRunAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TestRun to aggregate.
+     */
+    where?: TestRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TestRuns to fetch.
+     */
+    orderBy?: TestRunOrderByWithRelationInput | TestRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TestRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TestRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TestRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TestRuns
+    **/
+    _count?: true | TestRunCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TestRunAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TestRunSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TestRunMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TestRunMaxAggregateInputType
+  }
+
+  export type GetTestRunAggregateType<T extends TestRunAggregateArgs> = {
+        [P in keyof T & keyof AggregateTestRun]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTestRun[P]>
+      : GetScalarType<T[P], AggregateTestRun[P]>
+  }
+
+
+
+
+  export type TestRunGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TestRunWhereInput
+    orderBy?: TestRunOrderByWithAggregationInput | TestRunOrderByWithAggregationInput[]
+    by: TestRunScalarFieldEnum[] | TestRunScalarFieldEnum
+    having?: TestRunScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TestRunCountAggregateInputType | true
+    _avg?: TestRunAvgAggregateInputType
+    _sum?: TestRunSumAggregateInputType
+    _min?: TestRunMinAggregateInputType
+    _max?: TestRunMaxAggregateInputType
+  }
+
+  export type TestRunGroupByOutputType = {
+    id: number
+    createdAt: Date
+    totalCases: number
+    tp: number
+    fp: number
+    fn: number
+    precision: number
+    recall: number
+    f1: number
+    _count: TestRunCountAggregateOutputType | null
+    _avg: TestRunAvgAggregateOutputType | null
+    _sum: TestRunSumAggregateOutputType | null
+    _min: TestRunMinAggregateOutputType | null
+    _max: TestRunMaxAggregateOutputType | null
+  }
+
+  type GetTestRunGroupByPayload<T extends TestRunGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TestRunGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TestRunGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TestRunGroupByOutputType[P]>
+            : GetScalarType<T[P], TestRunGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TestRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    totalCases?: boolean
+    tp?: boolean
+    fp?: boolean
+    fn?: boolean
+    precision?: boolean
+    recall?: boolean
+    f1?: boolean
+    testCases?: boolean | TestRun$testCasesArgs<ExtArgs>
+    _count?: boolean | TestRunCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["testRun"]>
+
+  export type TestRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    totalCases?: boolean
+    tp?: boolean
+    fp?: boolean
+    fn?: boolean
+    precision?: boolean
+    recall?: boolean
+    f1?: boolean
+  }, ExtArgs["result"]["testRun"]>
+
+  export type TestRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    totalCases?: boolean
+    tp?: boolean
+    fp?: boolean
+    fn?: boolean
+    precision?: boolean
+    recall?: boolean
+    f1?: boolean
+  }, ExtArgs["result"]["testRun"]>
+
+  export type TestRunSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    totalCases?: boolean
+    tp?: boolean
+    fp?: boolean
+    fn?: boolean
+    precision?: boolean
+    recall?: boolean
+    f1?: boolean
+  }
+
+  export type TestRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "totalCases" | "tp" | "fp" | "fn" | "precision" | "recall" | "f1", ExtArgs["result"]["testRun"]>
+  export type TestRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    testCases?: boolean | TestRun$testCasesArgs<ExtArgs>
+    _count?: boolean | TestRunCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TestRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TestRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $TestRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TestRun"
+    objects: {
+      testCases: Prisma.$TestCasePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      createdAt: Date
+      totalCases: number
+      tp: number
+      fp: number
+      fn: number
+      precision: number
+      recall: number
+      f1: number
+    }, ExtArgs["result"]["testRun"]>
+    composites: {}
+  }
+
+  type TestRunGetPayload<S extends boolean | null | undefined | TestRunDefaultArgs> = $Result.GetResult<Prisma.$TestRunPayload, S>
+
+  type TestRunCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TestRunFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TestRunCountAggregateInputType | true
+    }
+
+  export interface TestRunDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TestRun'], meta: { name: 'TestRun' } }
+    /**
+     * Find zero or one TestRun that matches the filter.
+     * @param {TestRunFindUniqueArgs} args - Arguments to find a TestRun
+     * @example
+     * // Get one TestRun
+     * const testRun = await prisma.testRun.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TestRunFindUniqueArgs>(args: SelectSubset<T, TestRunFindUniqueArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TestRun that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TestRunFindUniqueOrThrowArgs} args - Arguments to find a TestRun
+     * @example
+     * // Get one TestRun
+     * const testRun = await prisma.testRun.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TestRunFindUniqueOrThrowArgs>(args: SelectSubset<T, TestRunFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TestRun that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestRunFindFirstArgs} args - Arguments to find a TestRun
+     * @example
+     * // Get one TestRun
+     * const testRun = await prisma.testRun.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TestRunFindFirstArgs>(args?: SelectSubset<T, TestRunFindFirstArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TestRun that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestRunFindFirstOrThrowArgs} args - Arguments to find a TestRun
+     * @example
+     * // Get one TestRun
+     * const testRun = await prisma.testRun.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TestRunFindFirstOrThrowArgs>(args?: SelectSubset<T, TestRunFindFirstOrThrowArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TestRuns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestRunFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TestRuns
+     * const testRuns = await prisma.testRun.findMany()
+     * 
+     * // Get first 10 TestRuns
+     * const testRuns = await prisma.testRun.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const testRunWithIdOnly = await prisma.testRun.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TestRunFindManyArgs>(args?: SelectSubset<T, TestRunFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TestRun.
+     * @param {TestRunCreateArgs} args - Arguments to create a TestRun.
+     * @example
+     * // Create one TestRun
+     * const TestRun = await prisma.testRun.create({
+     *   data: {
+     *     // ... data to create a TestRun
+     *   }
+     * })
+     * 
+     */
+    create<T extends TestRunCreateArgs>(args: SelectSubset<T, TestRunCreateArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TestRuns.
+     * @param {TestRunCreateManyArgs} args - Arguments to create many TestRuns.
+     * @example
+     * // Create many TestRuns
+     * const testRun = await prisma.testRun.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TestRunCreateManyArgs>(args?: SelectSubset<T, TestRunCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TestRuns and returns the data saved in the database.
+     * @param {TestRunCreateManyAndReturnArgs} args - Arguments to create many TestRuns.
+     * @example
+     * // Create many TestRuns
+     * const testRun = await prisma.testRun.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TestRuns and only return the `id`
+     * const testRunWithIdOnly = await prisma.testRun.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TestRunCreateManyAndReturnArgs>(args?: SelectSubset<T, TestRunCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TestRun.
+     * @param {TestRunDeleteArgs} args - Arguments to delete one TestRun.
+     * @example
+     * // Delete one TestRun
+     * const TestRun = await prisma.testRun.delete({
+     *   where: {
+     *     // ... filter to delete one TestRun
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TestRunDeleteArgs>(args: SelectSubset<T, TestRunDeleteArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TestRun.
+     * @param {TestRunUpdateArgs} args - Arguments to update one TestRun.
+     * @example
+     * // Update one TestRun
+     * const testRun = await prisma.testRun.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TestRunUpdateArgs>(args: SelectSubset<T, TestRunUpdateArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TestRuns.
+     * @param {TestRunDeleteManyArgs} args - Arguments to filter TestRuns to delete.
+     * @example
+     * // Delete a few TestRuns
+     * const { count } = await prisma.testRun.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TestRunDeleteManyArgs>(args?: SelectSubset<T, TestRunDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TestRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestRunUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TestRuns
+     * const testRun = await prisma.testRun.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TestRunUpdateManyArgs>(args: SelectSubset<T, TestRunUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TestRuns and returns the data updated in the database.
+     * @param {TestRunUpdateManyAndReturnArgs} args - Arguments to update many TestRuns.
+     * @example
+     * // Update many TestRuns
+     * const testRun = await prisma.testRun.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TestRuns and only return the `id`
+     * const testRunWithIdOnly = await prisma.testRun.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TestRunUpdateManyAndReturnArgs>(args: SelectSubset<T, TestRunUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TestRun.
+     * @param {TestRunUpsertArgs} args - Arguments to update or create a TestRun.
+     * @example
+     * // Update or create a TestRun
+     * const testRun = await prisma.testRun.upsert({
+     *   create: {
+     *     // ... data to create a TestRun
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TestRun we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TestRunUpsertArgs>(args: SelectSubset<T, TestRunUpsertArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TestRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestRunCountArgs} args - Arguments to filter TestRuns to count.
+     * @example
+     * // Count the number of TestRuns
+     * const count = await prisma.testRun.count({
+     *   where: {
+     *     // ... the filter for the TestRuns we want to count
+     *   }
+     * })
+    **/
+    count<T extends TestRunCountArgs>(
+      args?: Subset<T, TestRunCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TestRunCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TestRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestRunAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TestRunAggregateArgs>(args: Subset<T, TestRunAggregateArgs>): Prisma.PrismaPromise<GetTestRunAggregateType<T>>
+
+    /**
+     * Group by TestRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestRunGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TestRunGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TestRunGroupByArgs['orderBy'] }
+        : { orderBy?: TestRunGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TestRunGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTestRunGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TestRun model
+   */
+  readonly fields: TestRunFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TestRun.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TestRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    testCases<T extends TestRun$testCasesArgs<ExtArgs> = {}>(args?: Subset<T, TestRun$testCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TestRun model
+   */
+  interface TestRunFieldRefs {
+    readonly id: FieldRef<"TestRun", 'Int'>
+    readonly createdAt: FieldRef<"TestRun", 'DateTime'>
+    readonly totalCases: FieldRef<"TestRun", 'Int'>
+    readonly tp: FieldRef<"TestRun", 'Int'>
+    readonly fp: FieldRef<"TestRun", 'Int'>
+    readonly fn: FieldRef<"TestRun", 'Int'>
+    readonly precision: FieldRef<"TestRun", 'Float'>
+    readonly recall: FieldRef<"TestRun", 'Float'>
+    readonly f1: FieldRef<"TestRun", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TestRun findUnique
+   */
+  export type TestRunFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * Filter, which TestRun to fetch.
+     */
+    where: TestRunWhereUniqueInput
+  }
+
+  /**
+   * TestRun findUniqueOrThrow
+   */
+  export type TestRunFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * Filter, which TestRun to fetch.
+     */
+    where: TestRunWhereUniqueInput
+  }
+
+  /**
+   * TestRun findFirst
+   */
+  export type TestRunFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * Filter, which TestRun to fetch.
+     */
+    where?: TestRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TestRuns to fetch.
+     */
+    orderBy?: TestRunOrderByWithRelationInput | TestRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TestRuns.
+     */
+    cursor?: TestRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TestRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TestRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TestRuns.
+     */
+    distinct?: TestRunScalarFieldEnum | TestRunScalarFieldEnum[]
+  }
+
+  /**
+   * TestRun findFirstOrThrow
+   */
+  export type TestRunFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * Filter, which TestRun to fetch.
+     */
+    where?: TestRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TestRuns to fetch.
+     */
+    orderBy?: TestRunOrderByWithRelationInput | TestRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TestRuns.
+     */
+    cursor?: TestRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TestRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TestRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TestRuns.
+     */
+    distinct?: TestRunScalarFieldEnum | TestRunScalarFieldEnum[]
+  }
+
+  /**
+   * TestRun findMany
+   */
+  export type TestRunFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * Filter, which TestRuns to fetch.
+     */
+    where?: TestRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TestRuns to fetch.
+     */
+    orderBy?: TestRunOrderByWithRelationInput | TestRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TestRuns.
+     */
+    cursor?: TestRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TestRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TestRuns.
+     */
+    skip?: number
+    distinct?: TestRunScalarFieldEnum | TestRunScalarFieldEnum[]
+  }
+
+  /**
+   * TestRun create
+   */
+  export type TestRunCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TestRun.
+     */
+    data: XOR<TestRunCreateInput, TestRunUncheckedCreateInput>
+  }
+
+  /**
+   * TestRun createMany
+   */
+  export type TestRunCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TestRuns.
+     */
+    data: TestRunCreateManyInput | TestRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TestRun createManyAndReturn
+   */
+  export type TestRunCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * The data used to create many TestRuns.
+     */
+    data: TestRunCreateManyInput | TestRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TestRun update
+   */
+  export type TestRunUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TestRun.
+     */
+    data: XOR<TestRunUpdateInput, TestRunUncheckedUpdateInput>
+    /**
+     * Choose, which TestRun to update.
+     */
+    where: TestRunWhereUniqueInput
+  }
+
+  /**
+   * TestRun updateMany
+   */
+  export type TestRunUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TestRuns.
+     */
+    data: XOR<TestRunUpdateManyMutationInput, TestRunUncheckedUpdateManyInput>
+    /**
+     * Filter which TestRuns to update
+     */
+    where?: TestRunWhereInput
+    /**
+     * Limit how many TestRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TestRun updateManyAndReturn
+   */
+  export type TestRunUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * The data used to update TestRuns.
+     */
+    data: XOR<TestRunUpdateManyMutationInput, TestRunUncheckedUpdateManyInput>
+    /**
+     * Filter which TestRuns to update
+     */
+    where?: TestRunWhereInput
+    /**
+     * Limit how many TestRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TestRun upsert
+   */
+  export type TestRunUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TestRun to update in case it exists.
+     */
+    where: TestRunWhereUniqueInput
+    /**
+     * In case the TestRun found by the `where` argument doesn't exist, create a new TestRun with this data.
+     */
+    create: XOR<TestRunCreateInput, TestRunUncheckedCreateInput>
+    /**
+     * In case the TestRun was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TestRunUpdateInput, TestRunUncheckedUpdateInput>
+  }
+
+  /**
+   * TestRun delete
+   */
+  export type TestRunDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+    /**
+     * Filter which TestRun to delete.
+     */
+    where: TestRunWhereUniqueInput
+  }
+
+  /**
+   * TestRun deleteMany
+   */
+  export type TestRunDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TestRuns to delete
+     */
+    where?: TestRunWhereInput
+    /**
+     * Limit how many TestRuns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TestRun.testCases
+   */
+  export type TestRun$testCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    where?: TestCaseWhereInput
+    orderBy?: TestCaseOrderByWithRelationInput | TestCaseOrderByWithRelationInput[]
+    cursor?: TestCaseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TestCaseScalarFieldEnum | TestCaseScalarFieldEnum[]
+  }
+
+  /**
+   * TestRun without action
+   */
+  export type TestRunDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestRun
+     */
+    select?: TestRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestRun
+     */
+    omit?: TestRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestRunInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TestCase
+   */
+
+  export type AggregateTestCase = {
+    _count: TestCaseCountAggregateOutputType | null
+    _avg: TestCaseAvgAggregateOutputType | null
+    _sum: TestCaseSumAggregateOutputType | null
+    _min: TestCaseMinAggregateOutputType | null
+    _max: TestCaseMaxAggregateOutputType | null
+  }
+
+  export type TestCaseAvgAggregateOutputType = {
+    id: number | null
+    testRunId: number | null
+    caseIndex: number | null
+    tp: number | null
+    fp: number | null
+    fn: number | null
+  }
+
+  export type TestCaseSumAggregateOutputType = {
+    id: number | null
+    testRunId: number | null
+    caseIndex: number | null
+    tp: number | null
+    fp: number | null
+    fn: number | null
+  }
+
+  export type TestCaseMinAggregateOutputType = {
+    id: number | null
+    testRunId: number | null
+    caseIndex: number | null
+    problemText: string | null
+    hasMismatch: boolean | null
+    tp: number | null
+    fp: number | null
+    fn: number | null
+    groundTruth: string | null
+    predicted: string | null
+  }
+
+  export type TestCaseMaxAggregateOutputType = {
+    id: number | null
+    testRunId: number | null
+    caseIndex: number | null
+    problemText: string | null
+    hasMismatch: boolean | null
+    tp: number | null
+    fp: number | null
+    fn: number | null
+    groundTruth: string | null
+    predicted: string | null
+  }
+
+  export type TestCaseCountAggregateOutputType = {
+    id: number
+    testRunId: number
+    caseIndex: number
+    problemText: number
+    hasMismatch: number
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: number
+    predicted: number
+    _all: number
+  }
+
+
+  export type TestCaseAvgAggregateInputType = {
+    id?: true
+    testRunId?: true
+    caseIndex?: true
+    tp?: true
+    fp?: true
+    fn?: true
+  }
+
+  export type TestCaseSumAggregateInputType = {
+    id?: true
+    testRunId?: true
+    caseIndex?: true
+    tp?: true
+    fp?: true
+    fn?: true
+  }
+
+  export type TestCaseMinAggregateInputType = {
+    id?: true
+    testRunId?: true
+    caseIndex?: true
+    problemText?: true
+    hasMismatch?: true
+    tp?: true
+    fp?: true
+    fn?: true
+    groundTruth?: true
+    predicted?: true
+  }
+
+  export type TestCaseMaxAggregateInputType = {
+    id?: true
+    testRunId?: true
+    caseIndex?: true
+    problemText?: true
+    hasMismatch?: true
+    tp?: true
+    fp?: true
+    fn?: true
+    groundTruth?: true
+    predicted?: true
+  }
+
+  export type TestCaseCountAggregateInputType = {
+    id?: true
+    testRunId?: true
+    caseIndex?: true
+    problemText?: true
+    hasMismatch?: true
+    tp?: true
+    fp?: true
+    fn?: true
+    groundTruth?: true
+    predicted?: true
+    _all?: true
+  }
+
+  export type TestCaseAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TestCase to aggregate.
+     */
+    where?: TestCaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TestCases to fetch.
+     */
+    orderBy?: TestCaseOrderByWithRelationInput | TestCaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TestCaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TestCases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TestCases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TestCases
+    **/
+    _count?: true | TestCaseCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TestCaseAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TestCaseSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TestCaseMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TestCaseMaxAggregateInputType
+  }
+
+  export type GetTestCaseAggregateType<T extends TestCaseAggregateArgs> = {
+        [P in keyof T & keyof AggregateTestCase]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTestCase[P]>
+      : GetScalarType<T[P], AggregateTestCase[P]>
+  }
+
+
+
+
+  export type TestCaseGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TestCaseWhereInput
+    orderBy?: TestCaseOrderByWithAggregationInput | TestCaseOrderByWithAggregationInput[]
+    by: TestCaseScalarFieldEnum[] | TestCaseScalarFieldEnum
+    having?: TestCaseScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TestCaseCountAggregateInputType | true
+    _avg?: TestCaseAvgAggregateInputType
+    _sum?: TestCaseSumAggregateInputType
+    _min?: TestCaseMinAggregateInputType
+    _max?: TestCaseMaxAggregateInputType
+  }
+
+  export type TestCaseGroupByOutputType = {
+    id: number
+    testRunId: number
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+    _count: TestCaseCountAggregateOutputType | null
+    _avg: TestCaseAvgAggregateOutputType | null
+    _sum: TestCaseSumAggregateOutputType | null
+    _min: TestCaseMinAggregateOutputType | null
+    _max: TestCaseMaxAggregateOutputType | null
+  }
+
+  type GetTestCaseGroupByPayload<T extends TestCaseGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TestCaseGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TestCaseGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TestCaseGroupByOutputType[P]>
+            : GetScalarType<T[P], TestCaseGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TestCaseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    testRunId?: boolean
+    caseIndex?: boolean
+    problemText?: boolean
+    hasMismatch?: boolean
+    tp?: boolean
+    fp?: boolean
+    fn?: boolean
+    groundTruth?: boolean
+    predicted?: boolean
+    testRun?: boolean | TestRunDefaultArgs<ExtArgs>
+    messages?: boolean | TestCase$messagesArgs<ExtArgs>
+    _count?: boolean | TestCaseCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["testCase"]>
+
+  export type TestCaseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    testRunId?: boolean
+    caseIndex?: boolean
+    problemText?: boolean
+    hasMismatch?: boolean
+    tp?: boolean
+    fp?: boolean
+    fn?: boolean
+    groundTruth?: boolean
+    predicted?: boolean
+    testRun?: boolean | TestRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["testCase"]>
+
+  export type TestCaseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    testRunId?: boolean
+    caseIndex?: boolean
+    problemText?: boolean
+    hasMismatch?: boolean
+    tp?: boolean
+    fp?: boolean
+    fn?: boolean
+    groundTruth?: boolean
+    predicted?: boolean
+    testRun?: boolean | TestRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["testCase"]>
+
+  export type TestCaseSelectScalar = {
+    id?: boolean
+    testRunId?: boolean
+    caseIndex?: boolean
+    problemText?: boolean
+    hasMismatch?: boolean
+    tp?: boolean
+    fp?: boolean
+    fn?: boolean
+    groundTruth?: boolean
+    predicted?: boolean
+  }
+
+  export type TestCaseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "testRunId" | "caseIndex" | "problemText" | "hasMismatch" | "tp" | "fp" | "fn" | "groundTruth" | "predicted", ExtArgs["result"]["testCase"]>
+  export type TestCaseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    testRun?: boolean | TestRunDefaultArgs<ExtArgs>
+    messages?: boolean | TestCase$messagesArgs<ExtArgs>
+    _count?: boolean | TestCaseCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TestCaseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    testRun?: boolean | TestRunDefaultArgs<ExtArgs>
+  }
+  export type TestCaseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    testRun?: boolean | TestRunDefaultArgs<ExtArgs>
+  }
+
+  export type $TestCasePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TestCase"
+    objects: {
+      testRun: Prisma.$TestRunPayload<ExtArgs>
+      messages: Prisma.$ConversationMessagePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      testRunId: number
+      caseIndex: number
+      problemText: string
+      hasMismatch: boolean
+      tp: number
+      fp: number
+      fn: number
+      groundTruth: string
+      predicted: string
+    }, ExtArgs["result"]["testCase"]>
+    composites: {}
+  }
+
+  type TestCaseGetPayload<S extends boolean | null | undefined | TestCaseDefaultArgs> = $Result.GetResult<Prisma.$TestCasePayload, S>
+
+  type TestCaseCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TestCaseFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TestCaseCountAggregateInputType | true
+    }
+
+  export interface TestCaseDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TestCase'], meta: { name: 'TestCase' } }
+    /**
+     * Find zero or one TestCase that matches the filter.
+     * @param {TestCaseFindUniqueArgs} args - Arguments to find a TestCase
+     * @example
+     * // Get one TestCase
+     * const testCase = await prisma.testCase.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TestCaseFindUniqueArgs>(args: SelectSubset<T, TestCaseFindUniqueArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TestCase that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TestCaseFindUniqueOrThrowArgs} args - Arguments to find a TestCase
+     * @example
+     * // Get one TestCase
+     * const testCase = await prisma.testCase.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TestCaseFindUniqueOrThrowArgs>(args: SelectSubset<T, TestCaseFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TestCase that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestCaseFindFirstArgs} args - Arguments to find a TestCase
+     * @example
+     * // Get one TestCase
+     * const testCase = await prisma.testCase.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TestCaseFindFirstArgs>(args?: SelectSubset<T, TestCaseFindFirstArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TestCase that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestCaseFindFirstOrThrowArgs} args - Arguments to find a TestCase
+     * @example
+     * // Get one TestCase
+     * const testCase = await prisma.testCase.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TestCaseFindFirstOrThrowArgs>(args?: SelectSubset<T, TestCaseFindFirstOrThrowArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TestCases that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestCaseFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TestCases
+     * const testCases = await prisma.testCase.findMany()
+     * 
+     * // Get first 10 TestCases
+     * const testCases = await prisma.testCase.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const testCaseWithIdOnly = await prisma.testCase.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TestCaseFindManyArgs>(args?: SelectSubset<T, TestCaseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TestCase.
+     * @param {TestCaseCreateArgs} args - Arguments to create a TestCase.
+     * @example
+     * // Create one TestCase
+     * const TestCase = await prisma.testCase.create({
+     *   data: {
+     *     // ... data to create a TestCase
+     *   }
+     * })
+     * 
+     */
+    create<T extends TestCaseCreateArgs>(args: SelectSubset<T, TestCaseCreateArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TestCases.
+     * @param {TestCaseCreateManyArgs} args - Arguments to create many TestCases.
+     * @example
+     * // Create many TestCases
+     * const testCase = await prisma.testCase.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TestCaseCreateManyArgs>(args?: SelectSubset<T, TestCaseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TestCases and returns the data saved in the database.
+     * @param {TestCaseCreateManyAndReturnArgs} args - Arguments to create many TestCases.
+     * @example
+     * // Create many TestCases
+     * const testCase = await prisma.testCase.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TestCases and only return the `id`
+     * const testCaseWithIdOnly = await prisma.testCase.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TestCaseCreateManyAndReturnArgs>(args?: SelectSubset<T, TestCaseCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TestCase.
+     * @param {TestCaseDeleteArgs} args - Arguments to delete one TestCase.
+     * @example
+     * // Delete one TestCase
+     * const TestCase = await prisma.testCase.delete({
+     *   where: {
+     *     // ... filter to delete one TestCase
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TestCaseDeleteArgs>(args: SelectSubset<T, TestCaseDeleteArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TestCase.
+     * @param {TestCaseUpdateArgs} args - Arguments to update one TestCase.
+     * @example
+     * // Update one TestCase
+     * const testCase = await prisma.testCase.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TestCaseUpdateArgs>(args: SelectSubset<T, TestCaseUpdateArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TestCases.
+     * @param {TestCaseDeleteManyArgs} args - Arguments to filter TestCases to delete.
+     * @example
+     * // Delete a few TestCases
+     * const { count } = await prisma.testCase.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TestCaseDeleteManyArgs>(args?: SelectSubset<T, TestCaseDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TestCases.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestCaseUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TestCases
+     * const testCase = await prisma.testCase.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TestCaseUpdateManyArgs>(args: SelectSubset<T, TestCaseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TestCases and returns the data updated in the database.
+     * @param {TestCaseUpdateManyAndReturnArgs} args - Arguments to update many TestCases.
+     * @example
+     * // Update many TestCases
+     * const testCase = await prisma.testCase.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TestCases and only return the `id`
+     * const testCaseWithIdOnly = await prisma.testCase.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TestCaseUpdateManyAndReturnArgs>(args: SelectSubset<T, TestCaseUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TestCase.
+     * @param {TestCaseUpsertArgs} args - Arguments to update or create a TestCase.
+     * @example
+     * // Update or create a TestCase
+     * const testCase = await prisma.testCase.upsert({
+     *   create: {
+     *     // ... data to create a TestCase
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TestCase we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TestCaseUpsertArgs>(args: SelectSubset<T, TestCaseUpsertArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TestCases.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestCaseCountArgs} args - Arguments to filter TestCases to count.
+     * @example
+     * // Count the number of TestCases
+     * const count = await prisma.testCase.count({
+     *   where: {
+     *     // ... the filter for the TestCases we want to count
+     *   }
+     * })
+    **/
+    count<T extends TestCaseCountArgs>(
+      args?: Subset<T, TestCaseCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TestCaseCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TestCase.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestCaseAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TestCaseAggregateArgs>(args: Subset<T, TestCaseAggregateArgs>): Prisma.PrismaPromise<GetTestCaseAggregateType<T>>
+
+    /**
+     * Group by TestCase.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TestCaseGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TestCaseGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TestCaseGroupByArgs['orderBy'] }
+        : { orderBy?: TestCaseGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TestCaseGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTestCaseGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TestCase model
+   */
+  readonly fields: TestCaseFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TestCase.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TestCaseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    testRun<T extends TestRunDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TestRunDefaultArgs<ExtArgs>>): Prisma__TestRunClient<$Result.GetResult<Prisma.$TestRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    messages<T extends TestCase$messagesArgs<ExtArgs> = {}>(args?: Subset<T, TestCase$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TestCase model
+   */
+  interface TestCaseFieldRefs {
+    readonly id: FieldRef<"TestCase", 'Int'>
+    readonly testRunId: FieldRef<"TestCase", 'Int'>
+    readonly caseIndex: FieldRef<"TestCase", 'Int'>
+    readonly problemText: FieldRef<"TestCase", 'String'>
+    readonly hasMismatch: FieldRef<"TestCase", 'Boolean'>
+    readonly tp: FieldRef<"TestCase", 'Int'>
+    readonly fp: FieldRef<"TestCase", 'Int'>
+    readonly fn: FieldRef<"TestCase", 'Int'>
+    readonly groundTruth: FieldRef<"TestCase", 'String'>
+    readonly predicted: FieldRef<"TestCase", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TestCase findUnique
+   */
+  export type TestCaseFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which TestCase to fetch.
+     */
+    where: TestCaseWhereUniqueInput
+  }
+
+  /**
+   * TestCase findUniqueOrThrow
+   */
+  export type TestCaseFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which TestCase to fetch.
+     */
+    where: TestCaseWhereUniqueInput
+  }
+
+  /**
+   * TestCase findFirst
+   */
+  export type TestCaseFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which TestCase to fetch.
+     */
+    where?: TestCaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TestCases to fetch.
+     */
+    orderBy?: TestCaseOrderByWithRelationInput | TestCaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TestCases.
+     */
+    cursor?: TestCaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TestCases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TestCases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TestCases.
+     */
+    distinct?: TestCaseScalarFieldEnum | TestCaseScalarFieldEnum[]
+  }
+
+  /**
+   * TestCase findFirstOrThrow
+   */
+  export type TestCaseFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which TestCase to fetch.
+     */
+    where?: TestCaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TestCases to fetch.
+     */
+    orderBy?: TestCaseOrderByWithRelationInput | TestCaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TestCases.
+     */
+    cursor?: TestCaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TestCases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TestCases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TestCases.
+     */
+    distinct?: TestCaseScalarFieldEnum | TestCaseScalarFieldEnum[]
+  }
+
+  /**
+   * TestCase findMany
+   */
+  export type TestCaseFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * Filter, which TestCases to fetch.
+     */
+    where?: TestCaseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TestCases to fetch.
+     */
+    orderBy?: TestCaseOrderByWithRelationInput | TestCaseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TestCases.
+     */
+    cursor?: TestCaseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TestCases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TestCases.
+     */
+    skip?: number
+    distinct?: TestCaseScalarFieldEnum | TestCaseScalarFieldEnum[]
+  }
+
+  /**
+   * TestCase create
+   */
+  export type TestCaseCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TestCase.
+     */
+    data: XOR<TestCaseCreateInput, TestCaseUncheckedCreateInput>
+  }
+
+  /**
+   * TestCase createMany
+   */
+  export type TestCaseCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TestCases.
+     */
+    data: TestCaseCreateManyInput | TestCaseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TestCase createManyAndReturn
+   */
+  export type TestCaseCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * The data used to create many TestCases.
+     */
+    data: TestCaseCreateManyInput | TestCaseCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TestCase update
+   */
+  export type TestCaseUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TestCase.
+     */
+    data: XOR<TestCaseUpdateInput, TestCaseUncheckedUpdateInput>
+    /**
+     * Choose, which TestCase to update.
+     */
+    where: TestCaseWhereUniqueInput
+  }
+
+  /**
+   * TestCase updateMany
+   */
+  export type TestCaseUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TestCases.
+     */
+    data: XOR<TestCaseUpdateManyMutationInput, TestCaseUncheckedUpdateManyInput>
+    /**
+     * Filter which TestCases to update
+     */
+    where?: TestCaseWhereInput
+    /**
+     * Limit how many TestCases to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TestCase updateManyAndReturn
+   */
+  export type TestCaseUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * The data used to update TestCases.
+     */
+    data: XOR<TestCaseUpdateManyMutationInput, TestCaseUncheckedUpdateManyInput>
+    /**
+     * Filter which TestCases to update
+     */
+    where?: TestCaseWhereInput
+    /**
+     * Limit how many TestCases to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TestCase upsert
+   */
+  export type TestCaseUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TestCase to update in case it exists.
+     */
+    where: TestCaseWhereUniqueInput
+    /**
+     * In case the TestCase found by the `where` argument doesn't exist, create a new TestCase with this data.
+     */
+    create: XOR<TestCaseCreateInput, TestCaseUncheckedCreateInput>
+    /**
+     * In case the TestCase was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TestCaseUpdateInput, TestCaseUncheckedUpdateInput>
+  }
+
+  /**
+   * TestCase delete
+   */
+  export type TestCaseDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+    /**
+     * Filter which TestCase to delete.
+     */
+    where: TestCaseWhereUniqueInput
+  }
+
+  /**
+   * TestCase deleteMany
+   */
+  export type TestCaseDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TestCases to delete
+     */
+    where?: TestCaseWhereInput
+    /**
+     * Limit how many TestCases to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TestCase.messages
+   */
+  export type TestCase$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    where?: ConversationMessageWhereInput
+    orderBy?: ConversationMessageOrderByWithRelationInput | ConversationMessageOrderByWithRelationInput[]
+    cursor?: ConversationMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConversationMessageScalarFieldEnum | ConversationMessageScalarFieldEnum[]
+  }
+
+  /**
+   * TestCase without action
+   */
+  export type TestCaseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TestCase
+     */
+    select?: TestCaseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TestCase
+     */
+    omit?: TestCaseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TestCaseInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ConversationMessage
+   */
+
+  export type AggregateConversationMessage = {
+    _count: ConversationMessageCountAggregateOutputType | null
+    _avg: ConversationMessageAvgAggregateOutputType | null
+    _sum: ConversationMessageSumAggregateOutputType | null
+    _min: ConversationMessageMinAggregateOutputType | null
+    _max: ConversationMessageMaxAggregateOutputType | null
+  }
+
+  export type ConversationMessageAvgAggregateOutputType = {
+    id: number | null
+    testCaseId: number | null
+    msgOrder: number | null
+  }
+
+  export type ConversationMessageSumAggregateOutputType = {
+    id: number | null
+    testCaseId: number | null
+    msgOrder: number | null
+  }
+
+  export type ConversationMessageMinAggregateOutputType = {
+    id: number | null
+    testCaseId: number | null
+    msgOrder: number | null
+    role: string | null
+    content: string | null
+  }
+
+  export type ConversationMessageMaxAggregateOutputType = {
+    id: number | null
+    testCaseId: number | null
+    msgOrder: number | null
+    role: string | null
+    content: string | null
+  }
+
+  export type ConversationMessageCountAggregateOutputType = {
+    id: number
+    testCaseId: number
+    msgOrder: number
+    role: number
+    content: number
+    _all: number
+  }
+
+
+  export type ConversationMessageAvgAggregateInputType = {
+    id?: true
+    testCaseId?: true
+    msgOrder?: true
+  }
+
+  export type ConversationMessageSumAggregateInputType = {
+    id?: true
+    testCaseId?: true
+    msgOrder?: true
+  }
+
+  export type ConversationMessageMinAggregateInputType = {
+    id?: true
+    testCaseId?: true
+    msgOrder?: true
+    role?: true
+    content?: true
+  }
+
+  export type ConversationMessageMaxAggregateInputType = {
+    id?: true
+    testCaseId?: true
+    msgOrder?: true
+    role?: true
+    content?: true
+  }
+
+  export type ConversationMessageCountAggregateInputType = {
+    id?: true
+    testCaseId?: true
+    msgOrder?: true
+    role?: true
+    content?: true
+    _all?: true
+  }
+
+  export type ConversationMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ConversationMessage to aggregate.
+     */
+    where?: ConversationMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConversationMessages to fetch.
+     */
+    orderBy?: ConversationMessageOrderByWithRelationInput | ConversationMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ConversationMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConversationMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConversationMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ConversationMessages
+    **/
+    _count?: true | ConversationMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ConversationMessageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ConversationMessageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ConversationMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ConversationMessageMaxAggregateInputType
+  }
+
+  export type GetConversationMessageAggregateType<T extends ConversationMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateConversationMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateConversationMessage[P]>
+      : GetScalarType<T[P], AggregateConversationMessage[P]>
+  }
+
+
+
+
+  export type ConversationMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversationMessageWhereInput
+    orderBy?: ConversationMessageOrderByWithAggregationInput | ConversationMessageOrderByWithAggregationInput[]
+    by: ConversationMessageScalarFieldEnum[] | ConversationMessageScalarFieldEnum
+    having?: ConversationMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ConversationMessageCountAggregateInputType | true
+    _avg?: ConversationMessageAvgAggregateInputType
+    _sum?: ConversationMessageSumAggregateInputType
+    _min?: ConversationMessageMinAggregateInputType
+    _max?: ConversationMessageMaxAggregateInputType
+  }
+
+  export type ConversationMessageGroupByOutputType = {
+    id: number
+    testCaseId: number
+    msgOrder: number
+    role: string
+    content: string
+    _count: ConversationMessageCountAggregateOutputType | null
+    _avg: ConversationMessageAvgAggregateOutputType | null
+    _sum: ConversationMessageSumAggregateOutputType | null
+    _min: ConversationMessageMinAggregateOutputType | null
+    _max: ConversationMessageMaxAggregateOutputType | null
+  }
+
+  type GetConversationMessageGroupByPayload<T extends ConversationMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ConversationMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ConversationMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ConversationMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], ConversationMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ConversationMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    testCaseId?: boolean
+    msgOrder?: boolean
+    role?: boolean
+    content?: boolean
+    testCase?: boolean | TestCaseDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["conversationMessage"]>
+
+  export type ConversationMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    testCaseId?: boolean
+    msgOrder?: boolean
+    role?: boolean
+    content?: boolean
+    testCase?: boolean | TestCaseDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["conversationMessage"]>
+
+  export type ConversationMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    testCaseId?: boolean
+    msgOrder?: boolean
+    role?: boolean
+    content?: boolean
+    testCase?: boolean | TestCaseDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["conversationMessage"]>
+
+  export type ConversationMessageSelectScalar = {
+    id?: boolean
+    testCaseId?: boolean
+    msgOrder?: boolean
+    role?: boolean
+    content?: boolean
+  }
+
+  export type ConversationMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "testCaseId" | "msgOrder" | "role" | "content", ExtArgs["result"]["conversationMessage"]>
+  export type ConversationMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    testCase?: boolean | TestCaseDefaultArgs<ExtArgs>
+  }
+  export type ConversationMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    testCase?: boolean | TestCaseDefaultArgs<ExtArgs>
+  }
+  export type ConversationMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    testCase?: boolean | TestCaseDefaultArgs<ExtArgs>
+  }
+
+  export type $ConversationMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ConversationMessage"
+    objects: {
+      testCase: Prisma.$TestCasePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      testCaseId: number
+      msgOrder: number
+      role: string
+      content: string
+    }, ExtArgs["result"]["conversationMessage"]>
+    composites: {}
+  }
+
+  type ConversationMessageGetPayload<S extends boolean | null | undefined | ConversationMessageDefaultArgs> = $Result.GetResult<Prisma.$ConversationMessagePayload, S>
+
+  type ConversationMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ConversationMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ConversationMessageCountAggregateInputType | true
+    }
+
+  export interface ConversationMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ConversationMessage'], meta: { name: 'ConversationMessage' } }
+    /**
+     * Find zero or one ConversationMessage that matches the filter.
+     * @param {ConversationMessageFindUniqueArgs} args - Arguments to find a ConversationMessage
+     * @example
+     * // Get one ConversationMessage
+     * const conversationMessage = await prisma.conversationMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ConversationMessageFindUniqueArgs>(args: SelectSubset<T, ConversationMessageFindUniqueArgs<ExtArgs>>): Prisma__ConversationMessageClient<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ConversationMessage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ConversationMessageFindUniqueOrThrowArgs} args - Arguments to find a ConversationMessage
+     * @example
+     * // Get one ConversationMessage
+     * const conversationMessage = await prisma.conversationMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ConversationMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, ConversationMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ConversationMessageClient<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ConversationMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversationMessageFindFirstArgs} args - Arguments to find a ConversationMessage
+     * @example
+     * // Get one ConversationMessage
+     * const conversationMessage = await prisma.conversationMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ConversationMessageFindFirstArgs>(args?: SelectSubset<T, ConversationMessageFindFirstArgs<ExtArgs>>): Prisma__ConversationMessageClient<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ConversationMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversationMessageFindFirstOrThrowArgs} args - Arguments to find a ConversationMessage
+     * @example
+     * // Get one ConversationMessage
+     * const conversationMessage = await prisma.conversationMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ConversationMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, ConversationMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__ConversationMessageClient<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ConversationMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversationMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ConversationMessages
+     * const conversationMessages = await prisma.conversationMessage.findMany()
+     * 
+     * // Get first 10 ConversationMessages
+     * const conversationMessages = await prisma.conversationMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const conversationMessageWithIdOnly = await prisma.conversationMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ConversationMessageFindManyArgs>(args?: SelectSubset<T, ConversationMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ConversationMessage.
+     * @param {ConversationMessageCreateArgs} args - Arguments to create a ConversationMessage.
+     * @example
+     * // Create one ConversationMessage
+     * const ConversationMessage = await prisma.conversationMessage.create({
+     *   data: {
+     *     // ... data to create a ConversationMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends ConversationMessageCreateArgs>(args: SelectSubset<T, ConversationMessageCreateArgs<ExtArgs>>): Prisma__ConversationMessageClient<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ConversationMessages.
+     * @param {ConversationMessageCreateManyArgs} args - Arguments to create many ConversationMessages.
+     * @example
+     * // Create many ConversationMessages
+     * const conversationMessage = await prisma.conversationMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ConversationMessageCreateManyArgs>(args?: SelectSubset<T, ConversationMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ConversationMessages and returns the data saved in the database.
+     * @param {ConversationMessageCreateManyAndReturnArgs} args - Arguments to create many ConversationMessages.
+     * @example
+     * // Create many ConversationMessages
+     * const conversationMessage = await prisma.conversationMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ConversationMessages and only return the `id`
+     * const conversationMessageWithIdOnly = await prisma.conversationMessage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ConversationMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, ConversationMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ConversationMessage.
+     * @param {ConversationMessageDeleteArgs} args - Arguments to delete one ConversationMessage.
+     * @example
+     * // Delete one ConversationMessage
+     * const ConversationMessage = await prisma.conversationMessage.delete({
+     *   where: {
+     *     // ... filter to delete one ConversationMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ConversationMessageDeleteArgs>(args: SelectSubset<T, ConversationMessageDeleteArgs<ExtArgs>>): Prisma__ConversationMessageClient<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ConversationMessage.
+     * @param {ConversationMessageUpdateArgs} args - Arguments to update one ConversationMessage.
+     * @example
+     * // Update one ConversationMessage
+     * const conversationMessage = await prisma.conversationMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ConversationMessageUpdateArgs>(args: SelectSubset<T, ConversationMessageUpdateArgs<ExtArgs>>): Prisma__ConversationMessageClient<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ConversationMessages.
+     * @param {ConversationMessageDeleteManyArgs} args - Arguments to filter ConversationMessages to delete.
+     * @example
+     * // Delete a few ConversationMessages
+     * const { count } = await prisma.conversationMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ConversationMessageDeleteManyArgs>(args?: SelectSubset<T, ConversationMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ConversationMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversationMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ConversationMessages
+     * const conversationMessage = await prisma.conversationMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ConversationMessageUpdateManyArgs>(args: SelectSubset<T, ConversationMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ConversationMessages and returns the data updated in the database.
+     * @param {ConversationMessageUpdateManyAndReturnArgs} args - Arguments to update many ConversationMessages.
+     * @example
+     * // Update many ConversationMessages
+     * const conversationMessage = await prisma.conversationMessage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ConversationMessages and only return the `id`
+     * const conversationMessageWithIdOnly = await prisma.conversationMessage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ConversationMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, ConversationMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ConversationMessage.
+     * @param {ConversationMessageUpsertArgs} args - Arguments to update or create a ConversationMessage.
+     * @example
+     * // Update or create a ConversationMessage
+     * const conversationMessage = await prisma.conversationMessage.upsert({
+     *   create: {
+     *     // ... data to create a ConversationMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ConversationMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ConversationMessageUpsertArgs>(args: SelectSubset<T, ConversationMessageUpsertArgs<ExtArgs>>): Prisma__ConversationMessageClient<$Result.GetResult<Prisma.$ConversationMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ConversationMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversationMessageCountArgs} args - Arguments to filter ConversationMessages to count.
+     * @example
+     * // Count the number of ConversationMessages
+     * const count = await prisma.conversationMessage.count({
+     *   where: {
+     *     // ... the filter for the ConversationMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends ConversationMessageCountArgs>(
+      args?: Subset<T, ConversationMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ConversationMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ConversationMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversationMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ConversationMessageAggregateArgs>(args: Subset<T, ConversationMessageAggregateArgs>): Prisma.PrismaPromise<GetConversationMessageAggregateType<T>>
+
+    /**
+     * Group by ConversationMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversationMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ConversationMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ConversationMessageGroupByArgs['orderBy'] }
+        : { orderBy?: ConversationMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ConversationMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConversationMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ConversationMessage model
+   */
+  readonly fields: ConversationMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ConversationMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ConversationMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    testCase<T extends TestCaseDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TestCaseDefaultArgs<ExtArgs>>): Prisma__TestCaseClient<$Result.GetResult<Prisma.$TestCasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ConversationMessage model
+   */
+  interface ConversationMessageFieldRefs {
+    readonly id: FieldRef<"ConversationMessage", 'Int'>
+    readonly testCaseId: FieldRef<"ConversationMessage", 'Int'>
+    readonly msgOrder: FieldRef<"ConversationMessage", 'Int'>
+    readonly role: FieldRef<"ConversationMessage", 'String'>
+    readonly content: FieldRef<"ConversationMessage", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ConversationMessage findUnique
+   */
+  export type ConversationMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ConversationMessage to fetch.
+     */
+    where: ConversationMessageWhereUniqueInput
+  }
+
+  /**
+   * ConversationMessage findUniqueOrThrow
+   */
+  export type ConversationMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ConversationMessage to fetch.
+     */
+    where: ConversationMessageWhereUniqueInput
+  }
+
+  /**
+   * ConversationMessage findFirst
+   */
+  export type ConversationMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ConversationMessage to fetch.
+     */
+    where?: ConversationMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConversationMessages to fetch.
+     */
+    orderBy?: ConversationMessageOrderByWithRelationInput | ConversationMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ConversationMessages.
+     */
+    cursor?: ConversationMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConversationMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConversationMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ConversationMessages.
+     */
+    distinct?: ConversationMessageScalarFieldEnum | ConversationMessageScalarFieldEnum[]
+  }
+
+  /**
+   * ConversationMessage findFirstOrThrow
+   */
+  export type ConversationMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ConversationMessage to fetch.
+     */
+    where?: ConversationMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConversationMessages to fetch.
+     */
+    orderBy?: ConversationMessageOrderByWithRelationInput | ConversationMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ConversationMessages.
+     */
+    cursor?: ConversationMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConversationMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConversationMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ConversationMessages.
+     */
+    distinct?: ConversationMessageScalarFieldEnum | ConversationMessageScalarFieldEnum[]
+  }
+
+  /**
+   * ConversationMessage findMany
+   */
+  export type ConversationMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ConversationMessages to fetch.
+     */
+    where?: ConversationMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ConversationMessages to fetch.
+     */
+    orderBy?: ConversationMessageOrderByWithRelationInput | ConversationMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ConversationMessages.
+     */
+    cursor?: ConversationMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ConversationMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ConversationMessages.
+     */
+    skip?: number
+    distinct?: ConversationMessageScalarFieldEnum | ConversationMessageScalarFieldEnum[]
+  }
+
+  /**
+   * ConversationMessage create
+   */
+  export type ConversationMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ConversationMessage.
+     */
+    data: XOR<ConversationMessageCreateInput, ConversationMessageUncheckedCreateInput>
+  }
+
+  /**
+   * ConversationMessage createMany
+   */
+  export type ConversationMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ConversationMessages.
+     */
+    data: ConversationMessageCreateManyInput | ConversationMessageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ConversationMessage createManyAndReturn
+   */
+  export type ConversationMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * The data used to create many ConversationMessages.
+     */
+    data: ConversationMessageCreateManyInput | ConversationMessageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ConversationMessage update
+   */
+  export type ConversationMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ConversationMessage.
+     */
+    data: XOR<ConversationMessageUpdateInput, ConversationMessageUncheckedUpdateInput>
+    /**
+     * Choose, which ConversationMessage to update.
+     */
+    where: ConversationMessageWhereUniqueInput
+  }
+
+  /**
+   * ConversationMessage updateMany
+   */
+  export type ConversationMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ConversationMessages.
+     */
+    data: XOR<ConversationMessageUpdateManyMutationInput, ConversationMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which ConversationMessages to update
+     */
+    where?: ConversationMessageWhereInput
+    /**
+     * Limit how many ConversationMessages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ConversationMessage updateManyAndReturn
+   */
+  export type ConversationMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * The data used to update ConversationMessages.
+     */
+    data: XOR<ConversationMessageUpdateManyMutationInput, ConversationMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which ConversationMessages to update
+     */
+    where?: ConversationMessageWhereInput
+    /**
+     * Limit how many ConversationMessages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ConversationMessage upsert
+   */
+  export type ConversationMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ConversationMessage to update in case it exists.
+     */
+    where: ConversationMessageWhereUniqueInput
+    /**
+     * In case the ConversationMessage found by the `where` argument doesn't exist, create a new ConversationMessage with this data.
+     */
+    create: XOR<ConversationMessageCreateInput, ConversationMessageUncheckedCreateInput>
+    /**
+     * In case the ConversationMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ConversationMessageUpdateInput, ConversationMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * ConversationMessage delete
+   */
+  export type ConversationMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+    /**
+     * Filter which ConversationMessage to delete.
+     */
+    where: ConversationMessageWhereUniqueInput
+  }
+
+  /**
+   * ConversationMessage deleteMany
+   */
+  export type ConversationMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ConversationMessages to delete
+     */
+    where?: ConversationMessageWhereInput
+    /**
+     * Limit how many ConversationMessages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ConversationMessage without action
+   */
+  export type ConversationMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversationMessage
+     */
+    select?: ConversationMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ConversationMessage
+     */
+    omit?: ConversationMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -1899,6 +5724,48 @@ export namespace Prisma {
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+  export const TestRunScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    totalCases: 'totalCases',
+    tp: 'tp',
+    fp: 'fp',
+    fn: 'fn',
+    precision: 'precision',
+    recall: 'recall',
+    f1: 'f1'
+  };
+
+  export type TestRunScalarFieldEnum = (typeof TestRunScalarFieldEnum)[keyof typeof TestRunScalarFieldEnum]
+
+
+  export const TestCaseScalarFieldEnum: {
+    id: 'id',
+    testRunId: 'testRunId',
+    caseIndex: 'caseIndex',
+    problemText: 'problemText',
+    hasMismatch: 'hasMismatch',
+    tp: 'tp',
+    fp: 'fp',
+    fn: 'fn',
+    groundTruth: 'groundTruth',
+    predicted: 'predicted'
+  };
+
+  export type TestCaseScalarFieldEnum = (typeof TestCaseScalarFieldEnum)[keyof typeof TestCaseScalarFieldEnum]
+
+
+  export const ConversationMessageScalarFieldEnum: {
+    id: 'id',
+    testCaseId: 'testCaseId',
+    msgOrder: 'msgOrder',
+    role: 'role',
+    content: 'content'
+  };
+
+  export type ConversationMessageScalarFieldEnum = (typeof ConversationMessageScalarFieldEnum)[keyof typeof ConversationMessageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1976,6 +5843,13 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
   /**
    * Deep Input Types
    */
@@ -2030,6 +5904,225 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
 
+  export type TestRunWhereInput = {
+    AND?: TestRunWhereInput | TestRunWhereInput[]
+    OR?: TestRunWhereInput[]
+    NOT?: TestRunWhereInput | TestRunWhereInput[]
+    id?: IntFilter<"TestRun"> | number
+    createdAt?: DateTimeFilter<"TestRun"> | Date | string
+    totalCases?: IntFilter<"TestRun"> | number
+    tp?: IntFilter<"TestRun"> | number
+    fp?: IntFilter<"TestRun"> | number
+    fn?: IntFilter<"TestRun"> | number
+    precision?: FloatFilter<"TestRun"> | number
+    recall?: FloatFilter<"TestRun"> | number
+    f1?: FloatFilter<"TestRun"> | number
+    testCases?: TestCaseListRelationFilter
+  }
+
+  export type TestRunOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    totalCases?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    precision?: SortOrder
+    recall?: SortOrder
+    f1?: SortOrder
+    testCases?: TestCaseOrderByRelationAggregateInput
+  }
+
+  export type TestRunWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: TestRunWhereInput | TestRunWhereInput[]
+    OR?: TestRunWhereInput[]
+    NOT?: TestRunWhereInput | TestRunWhereInput[]
+    createdAt?: DateTimeFilter<"TestRun"> | Date | string
+    totalCases?: IntFilter<"TestRun"> | number
+    tp?: IntFilter<"TestRun"> | number
+    fp?: IntFilter<"TestRun"> | number
+    fn?: IntFilter<"TestRun"> | number
+    precision?: FloatFilter<"TestRun"> | number
+    recall?: FloatFilter<"TestRun"> | number
+    f1?: FloatFilter<"TestRun"> | number
+    testCases?: TestCaseListRelationFilter
+  }, "id">
+
+  export type TestRunOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    totalCases?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    precision?: SortOrder
+    recall?: SortOrder
+    f1?: SortOrder
+    _count?: TestRunCountOrderByAggregateInput
+    _avg?: TestRunAvgOrderByAggregateInput
+    _max?: TestRunMaxOrderByAggregateInput
+    _min?: TestRunMinOrderByAggregateInput
+    _sum?: TestRunSumOrderByAggregateInput
+  }
+
+  export type TestRunScalarWhereWithAggregatesInput = {
+    AND?: TestRunScalarWhereWithAggregatesInput | TestRunScalarWhereWithAggregatesInput[]
+    OR?: TestRunScalarWhereWithAggregatesInput[]
+    NOT?: TestRunScalarWhereWithAggregatesInput | TestRunScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TestRun"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"TestRun"> | Date | string
+    totalCases?: IntWithAggregatesFilter<"TestRun"> | number
+    tp?: IntWithAggregatesFilter<"TestRun"> | number
+    fp?: IntWithAggregatesFilter<"TestRun"> | number
+    fn?: IntWithAggregatesFilter<"TestRun"> | number
+    precision?: FloatWithAggregatesFilter<"TestRun"> | number
+    recall?: FloatWithAggregatesFilter<"TestRun"> | number
+    f1?: FloatWithAggregatesFilter<"TestRun"> | number
+  }
+
+  export type TestCaseWhereInput = {
+    AND?: TestCaseWhereInput | TestCaseWhereInput[]
+    OR?: TestCaseWhereInput[]
+    NOT?: TestCaseWhereInput | TestCaseWhereInput[]
+    id?: IntFilter<"TestCase"> | number
+    testRunId?: IntFilter<"TestCase"> | number
+    caseIndex?: IntFilter<"TestCase"> | number
+    problemText?: StringFilter<"TestCase"> | string
+    hasMismatch?: BoolFilter<"TestCase"> | boolean
+    tp?: IntFilter<"TestCase"> | number
+    fp?: IntFilter<"TestCase"> | number
+    fn?: IntFilter<"TestCase"> | number
+    groundTruth?: StringFilter<"TestCase"> | string
+    predicted?: StringFilter<"TestCase"> | string
+    testRun?: XOR<TestRunScalarRelationFilter, TestRunWhereInput>
+    messages?: ConversationMessageListRelationFilter
+  }
+
+  export type TestCaseOrderByWithRelationInput = {
+    id?: SortOrder
+    testRunId?: SortOrder
+    caseIndex?: SortOrder
+    problemText?: SortOrder
+    hasMismatch?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    groundTruth?: SortOrder
+    predicted?: SortOrder
+    testRun?: TestRunOrderByWithRelationInput
+    messages?: ConversationMessageOrderByRelationAggregateInput
+  }
+
+  export type TestCaseWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: TestCaseWhereInput | TestCaseWhereInput[]
+    OR?: TestCaseWhereInput[]
+    NOT?: TestCaseWhereInput | TestCaseWhereInput[]
+    testRunId?: IntFilter<"TestCase"> | number
+    caseIndex?: IntFilter<"TestCase"> | number
+    problemText?: StringFilter<"TestCase"> | string
+    hasMismatch?: BoolFilter<"TestCase"> | boolean
+    tp?: IntFilter<"TestCase"> | number
+    fp?: IntFilter<"TestCase"> | number
+    fn?: IntFilter<"TestCase"> | number
+    groundTruth?: StringFilter<"TestCase"> | string
+    predicted?: StringFilter<"TestCase"> | string
+    testRun?: XOR<TestRunScalarRelationFilter, TestRunWhereInput>
+    messages?: ConversationMessageListRelationFilter
+  }, "id">
+
+  export type TestCaseOrderByWithAggregationInput = {
+    id?: SortOrder
+    testRunId?: SortOrder
+    caseIndex?: SortOrder
+    problemText?: SortOrder
+    hasMismatch?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    groundTruth?: SortOrder
+    predicted?: SortOrder
+    _count?: TestCaseCountOrderByAggregateInput
+    _avg?: TestCaseAvgOrderByAggregateInput
+    _max?: TestCaseMaxOrderByAggregateInput
+    _min?: TestCaseMinOrderByAggregateInput
+    _sum?: TestCaseSumOrderByAggregateInput
+  }
+
+  export type TestCaseScalarWhereWithAggregatesInput = {
+    AND?: TestCaseScalarWhereWithAggregatesInput | TestCaseScalarWhereWithAggregatesInput[]
+    OR?: TestCaseScalarWhereWithAggregatesInput[]
+    NOT?: TestCaseScalarWhereWithAggregatesInput | TestCaseScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TestCase"> | number
+    testRunId?: IntWithAggregatesFilter<"TestCase"> | number
+    caseIndex?: IntWithAggregatesFilter<"TestCase"> | number
+    problemText?: StringWithAggregatesFilter<"TestCase"> | string
+    hasMismatch?: BoolWithAggregatesFilter<"TestCase"> | boolean
+    tp?: IntWithAggregatesFilter<"TestCase"> | number
+    fp?: IntWithAggregatesFilter<"TestCase"> | number
+    fn?: IntWithAggregatesFilter<"TestCase"> | number
+    groundTruth?: StringWithAggregatesFilter<"TestCase"> | string
+    predicted?: StringWithAggregatesFilter<"TestCase"> | string
+  }
+
+  export type ConversationMessageWhereInput = {
+    AND?: ConversationMessageWhereInput | ConversationMessageWhereInput[]
+    OR?: ConversationMessageWhereInput[]
+    NOT?: ConversationMessageWhereInput | ConversationMessageWhereInput[]
+    id?: IntFilter<"ConversationMessage"> | number
+    testCaseId?: IntFilter<"ConversationMessage"> | number
+    msgOrder?: IntFilter<"ConversationMessage"> | number
+    role?: StringFilter<"ConversationMessage"> | string
+    content?: StringFilter<"ConversationMessage"> | string
+    testCase?: XOR<TestCaseScalarRelationFilter, TestCaseWhereInput>
+  }
+
+  export type ConversationMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    testCaseId?: SortOrder
+    msgOrder?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+    testCase?: TestCaseOrderByWithRelationInput
+  }
+
+  export type ConversationMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ConversationMessageWhereInput | ConversationMessageWhereInput[]
+    OR?: ConversationMessageWhereInput[]
+    NOT?: ConversationMessageWhereInput | ConversationMessageWhereInput[]
+    testCaseId?: IntFilter<"ConversationMessage"> | number
+    msgOrder?: IntFilter<"ConversationMessage"> | number
+    role?: StringFilter<"ConversationMessage"> | string
+    content?: StringFilter<"ConversationMessage"> | string
+    testCase?: XOR<TestCaseScalarRelationFilter, TestCaseWhereInput>
+  }, "id">
+
+  export type ConversationMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    testCaseId?: SortOrder
+    msgOrder?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+    _count?: ConversationMessageCountOrderByAggregateInput
+    _avg?: ConversationMessageAvgOrderByAggregateInput
+    _max?: ConversationMessageMaxOrderByAggregateInput
+    _min?: ConversationMessageMinOrderByAggregateInput
+    _sum?: ConversationMessageSumOrderByAggregateInput
+  }
+
+  export type ConversationMessageScalarWhereWithAggregatesInput = {
+    AND?: ConversationMessageScalarWhereWithAggregatesInput | ConversationMessageScalarWhereWithAggregatesInput[]
+    OR?: ConversationMessageScalarWhereWithAggregatesInput[]
+    NOT?: ConversationMessageScalarWhereWithAggregatesInput | ConversationMessageScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ConversationMessage"> | number
+    testCaseId?: IntWithAggregatesFilter<"ConversationMessage"> | number
+    msgOrder?: IntWithAggregatesFilter<"ConversationMessage"> | number
+    role?: StringWithAggregatesFilter<"ConversationMessage"> | string
+    content?: StringWithAggregatesFilter<"ConversationMessage"> | string
+  }
+
   export type PostCreateInput = {
     name: string
     createdAt?: Date | string
@@ -2074,6 +6167,234 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TestRunCreateInput = {
+    createdAt?: Date | string
+    totalCases: number
+    tp: number
+    fp: number
+    fn: number
+    precision: number
+    recall: number
+    f1: number
+    testCases?: TestCaseCreateNestedManyWithoutTestRunInput
+  }
+
+  export type TestRunUncheckedCreateInput = {
+    id?: number
+    createdAt?: Date | string
+    totalCases: number
+    tp: number
+    fp: number
+    fn: number
+    precision: number
+    recall: number
+    f1: number
+    testCases?: TestCaseUncheckedCreateNestedManyWithoutTestRunInput
+  }
+
+  export type TestRunUpdateInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    precision?: FloatFieldUpdateOperationsInput | number
+    recall?: FloatFieldUpdateOperationsInput | number
+    f1?: FloatFieldUpdateOperationsInput | number
+    testCases?: TestCaseUpdateManyWithoutTestRunNestedInput
+  }
+
+  export type TestRunUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    precision?: FloatFieldUpdateOperationsInput | number
+    recall?: FloatFieldUpdateOperationsInput | number
+    f1?: FloatFieldUpdateOperationsInput | number
+    testCases?: TestCaseUncheckedUpdateManyWithoutTestRunNestedInput
+  }
+
+  export type TestRunCreateManyInput = {
+    id?: number
+    createdAt?: Date | string
+    totalCases: number
+    tp: number
+    fp: number
+    fn: number
+    precision: number
+    recall: number
+    f1: number
+  }
+
+  export type TestRunUpdateManyMutationInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    precision?: FloatFieldUpdateOperationsInput | number
+    recall?: FloatFieldUpdateOperationsInput | number
+    f1?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type TestRunUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    precision?: FloatFieldUpdateOperationsInput | number
+    recall?: FloatFieldUpdateOperationsInput | number
+    f1?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type TestCaseCreateInput = {
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+    testRun: TestRunCreateNestedOneWithoutTestCasesInput
+    messages?: ConversationMessageCreateNestedManyWithoutTestCaseInput
+  }
+
+  export type TestCaseUncheckedCreateInput = {
+    id?: number
+    testRunId: number
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+    messages?: ConversationMessageUncheckedCreateNestedManyWithoutTestCaseInput
+  }
+
+  export type TestCaseUpdateInput = {
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+    testRun?: TestRunUpdateOneRequiredWithoutTestCasesNestedInput
+    messages?: ConversationMessageUpdateManyWithoutTestCaseNestedInput
+  }
+
+  export type TestCaseUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    testRunId?: IntFieldUpdateOperationsInput | number
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+    messages?: ConversationMessageUncheckedUpdateManyWithoutTestCaseNestedInput
+  }
+
+  export type TestCaseCreateManyInput = {
+    id?: number
+    testRunId: number
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+  }
+
+  export type TestCaseUpdateManyMutationInput = {
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TestCaseUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    testRunId?: IntFieldUpdateOperationsInput | number
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ConversationMessageCreateInput = {
+    msgOrder: number
+    role: string
+    content: string
+    testCase: TestCaseCreateNestedOneWithoutMessagesInput
+  }
+
+  export type ConversationMessageUncheckedCreateInput = {
+    id?: number
+    testCaseId: number
+    msgOrder: number
+    role: string
+    content: string
+  }
+
+  export type ConversationMessageUpdateInput = {
+    msgOrder?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    testCase?: TestCaseUpdateOneRequiredWithoutMessagesNestedInput
+  }
+
+  export type ConversationMessageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    testCaseId?: IntFieldUpdateOperationsInput | number
+    msgOrder?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ConversationMessageCreateManyInput = {
+    id?: number
+    testCaseId: number
+    msgOrder: number
+    role: string
+    content: string
+  }
+
+  export type ConversationMessageUpdateManyMutationInput = {
+    msgOrder?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ConversationMessageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    testCaseId?: IntFieldUpdateOperationsInput | number
+    msgOrder?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -2190,6 +6511,227 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type TestCaseListRelationFilter = {
+    every?: TestCaseWhereInput
+    some?: TestCaseWhereInput
+    none?: TestCaseWhereInput
+  }
+
+  export type TestCaseOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TestRunCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    totalCases?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    precision?: SortOrder
+    recall?: SortOrder
+    f1?: SortOrder
+  }
+
+  export type TestRunAvgOrderByAggregateInput = {
+    id?: SortOrder
+    totalCases?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    precision?: SortOrder
+    recall?: SortOrder
+    f1?: SortOrder
+  }
+
+  export type TestRunMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    totalCases?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    precision?: SortOrder
+    recall?: SortOrder
+    f1?: SortOrder
+  }
+
+  export type TestRunMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    totalCases?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    precision?: SortOrder
+    recall?: SortOrder
+    f1?: SortOrder
+  }
+
+  export type TestRunSumOrderByAggregateInput = {
+    id?: SortOrder
+    totalCases?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    precision?: SortOrder
+    recall?: SortOrder
+    f1?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type TestRunScalarRelationFilter = {
+    is?: TestRunWhereInput
+    isNot?: TestRunWhereInput
+  }
+
+  export type ConversationMessageListRelationFilter = {
+    every?: ConversationMessageWhereInput
+    some?: ConversationMessageWhereInput
+    none?: ConversationMessageWhereInput
+  }
+
+  export type ConversationMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TestCaseCountOrderByAggregateInput = {
+    id?: SortOrder
+    testRunId?: SortOrder
+    caseIndex?: SortOrder
+    problemText?: SortOrder
+    hasMismatch?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    groundTruth?: SortOrder
+    predicted?: SortOrder
+  }
+
+  export type TestCaseAvgOrderByAggregateInput = {
+    id?: SortOrder
+    testRunId?: SortOrder
+    caseIndex?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+  }
+
+  export type TestCaseMaxOrderByAggregateInput = {
+    id?: SortOrder
+    testRunId?: SortOrder
+    caseIndex?: SortOrder
+    problemText?: SortOrder
+    hasMismatch?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    groundTruth?: SortOrder
+    predicted?: SortOrder
+  }
+
+  export type TestCaseMinOrderByAggregateInput = {
+    id?: SortOrder
+    testRunId?: SortOrder
+    caseIndex?: SortOrder
+    problemText?: SortOrder
+    hasMismatch?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+    groundTruth?: SortOrder
+    predicted?: SortOrder
+  }
+
+  export type TestCaseSumOrderByAggregateInput = {
+    id?: SortOrder
+    testRunId?: SortOrder
+    caseIndex?: SortOrder
+    tp?: SortOrder
+    fp?: SortOrder
+    fn?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type TestCaseScalarRelationFilter = {
+    is?: TestCaseWhereInput
+    isNot?: TestCaseWhereInput
+  }
+
+  export type ConversationMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    testCaseId?: SortOrder
+    msgOrder?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+  }
+
+  export type ConversationMessageAvgOrderByAggregateInput = {
+    id?: SortOrder
+    testCaseId?: SortOrder
+    msgOrder?: SortOrder
+  }
+
+  export type ConversationMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    testCaseId?: SortOrder
+    msgOrder?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+  }
+
+  export type ConversationMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    testCaseId?: SortOrder
+    msgOrder?: SortOrder
+    role?: SortOrder
+    content?: SortOrder
+  }
+
+  export type ConversationMessageSumOrderByAggregateInput = {
+    id?: SortOrder
+    testCaseId?: SortOrder
+    msgOrder?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -2204,6 +6746,130 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type TestCaseCreateNestedManyWithoutTestRunInput = {
+    create?: XOR<TestCaseCreateWithoutTestRunInput, TestCaseUncheckedCreateWithoutTestRunInput> | TestCaseCreateWithoutTestRunInput[] | TestCaseUncheckedCreateWithoutTestRunInput[]
+    connectOrCreate?: TestCaseCreateOrConnectWithoutTestRunInput | TestCaseCreateOrConnectWithoutTestRunInput[]
+    createMany?: TestCaseCreateManyTestRunInputEnvelope
+    connect?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+  }
+
+  export type TestCaseUncheckedCreateNestedManyWithoutTestRunInput = {
+    create?: XOR<TestCaseCreateWithoutTestRunInput, TestCaseUncheckedCreateWithoutTestRunInput> | TestCaseCreateWithoutTestRunInput[] | TestCaseUncheckedCreateWithoutTestRunInput[]
+    connectOrCreate?: TestCaseCreateOrConnectWithoutTestRunInput | TestCaseCreateOrConnectWithoutTestRunInput[]
+    createMany?: TestCaseCreateManyTestRunInputEnvelope
+    connect?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type TestCaseUpdateManyWithoutTestRunNestedInput = {
+    create?: XOR<TestCaseCreateWithoutTestRunInput, TestCaseUncheckedCreateWithoutTestRunInput> | TestCaseCreateWithoutTestRunInput[] | TestCaseUncheckedCreateWithoutTestRunInput[]
+    connectOrCreate?: TestCaseCreateOrConnectWithoutTestRunInput | TestCaseCreateOrConnectWithoutTestRunInput[]
+    upsert?: TestCaseUpsertWithWhereUniqueWithoutTestRunInput | TestCaseUpsertWithWhereUniqueWithoutTestRunInput[]
+    createMany?: TestCaseCreateManyTestRunInputEnvelope
+    set?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+    disconnect?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+    delete?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+    connect?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+    update?: TestCaseUpdateWithWhereUniqueWithoutTestRunInput | TestCaseUpdateWithWhereUniqueWithoutTestRunInput[]
+    updateMany?: TestCaseUpdateManyWithWhereWithoutTestRunInput | TestCaseUpdateManyWithWhereWithoutTestRunInput[]
+    deleteMany?: TestCaseScalarWhereInput | TestCaseScalarWhereInput[]
+  }
+
+  export type TestCaseUncheckedUpdateManyWithoutTestRunNestedInput = {
+    create?: XOR<TestCaseCreateWithoutTestRunInput, TestCaseUncheckedCreateWithoutTestRunInput> | TestCaseCreateWithoutTestRunInput[] | TestCaseUncheckedCreateWithoutTestRunInput[]
+    connectOrCreate?: TestCaseCreateOrConnectWithoutTestRunInput | TestCaseCreateOrConnectWithoutTestRunInput[]
+    upsert?: TestCaseUpsertWithWhereUniqueWithoutTestRunInput | TestCaseUpsertWithWhereUniqueWithoutTestRunInput[]
+    createMany?: TestCaseCreateManyTestRunInputEnvelope
+    set?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+    disconnect?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+    delete?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+    connect?: TestCaseWhereUniqueInput | TestCaseWhereUniqueInput[]
+    update?: TestCaseUpdateWithWhereUniqueWithoutTestRunInput | TestCaseUpdateWithWhereUniqueWithoutTestRunInput[]
+    updateMany?: TestCaseUpdateManyWithWhereWithoutTestRunInput | TestCaseUpdateManyWithWhereWithoutTestRunInput[]
+    deleteMany?: TestCaseScalarWhereInput | TestCaseScalarWhereInput[]
+  }
+
+  export type TestRunCreateNestedOneWithoutTestCasesInput = {
+    create?: XOR<TestRunCreateWithoutTestCasesInput, TestRunUncheckedCreateWithoutTestCasesInput>
+    connectOrCreate?: TestRunCreateOrConnectWithoutTestCasesInput
+    connect?: TestRunWhereUniqueInput
+  }
+
+  export type ConversationMessageCreateNestedManyWithoutTestCaseInput = {
+    create?: XOR<ConversationMessageCreateWithoutTestCaseInput, ConversationMessageUncheckedCreateWithoutTestCaseInput> | ConversationMessageCreateWithoutTestCaseInput[] | ConversationMessageUncheckedCreateWithoutTestCaseInput[]
+    connectOrCreate?: ConversationMessageCreateOrConnectWithoutTestCaseInput | ConversationMessageCreateOrConnectWithoutTestCaseInput[]
+    createMany?: ConversationMessageCreateManyTestCaseInputEnvelope
+    connect?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+  }
+
+  export type ConversationMessageUncheckedCreateNestedManyWithoutTestCaseInput = {
+    create?: XOR<ConversationMessageCreateWithoutTestCaseInput, ConversationMessageUncheckedCreateWithoutTestCaseInput> | ConversationMessageCreateWithoutTestCaseInput[] | ConversationMessageUncheckedCreateWithoutTestCaseInput[]
+    connectOrCreate?: ConversationMessageCreateOrConnectWithoutTestCaseInput | ConversationMessageCreateOrConnectWithoutTestCaseInput[]
+    createMany?: ConversationMessageCreateManyTestCaseInputEnvelope
+    connect?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type TestRunUpdateOneRequiredWithoutTestCasesNestedInput = {
+    create?: XOR<TestRunCreateWithoutTestCasesInput, TestRunUncheckedCreateWithoutTestCasesInput>
+    connectOrCreate?: TestRunCreateOrConnectWithoutTestCasesInput
+    upsert?: TestRunUpsertWithoutTestCasesInput
+    connect?: TestRunWhereUniqueInput
+    update?: XOR<XOR<TestRunUpdateToOneWithWhereWithoutTestCasesInput, TestRunUpdateWithoutTestCasesInput>, TestRunUncheckedUpdateWithoutTestCasesInput>
+  }
+
+  export type ConversationMessageUpdateManyWithoutTestCaseNestedInput = {
+    create?: XOR<ConversationMessageCreateWithoutTestCaseInput, ConversationMessageUncheckedCreateWithoutTestCaseInput> | ConversationMessageCreateWithoutTestCaseInput[] | ConversationMessageUncheckedCreateWithoutTestCaseInput[]
+    connectOrCreate?: ConversationMessageCreateOrConnectWithoutTestCaseInput | ConversationMessageCreateOrConnectWithoutTestCaseInput[]
+    upsert?: ConversationMessageUpsertWithWhereUniqueWithoutTestCaseInput | ConversationMessageUpsertWithWhereUniqueWithoutTestCaseInput[]
+    createMany?: ConversationMessageCreateManyTestCaseInputEnvelope
+    set?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+    disconnect?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+    delete?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+    connect?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+    update?: ConversationMessageUpdateWithWhereUniqueWithoutTestCaseInput | ConversationMessageUpdateWithWhereUniqueWithoutTestCaseInput[]
+    updateMany?: ConversationMessageUpdateManyWithWhereWithoutTestCaseInput | ConversationMessageUpdateManyWithWhereWithoutTestCaseInput[]
+    deleteMany?: ConversationMessageScalarWhereInput | ConversationMessageScalarWhereInput[]
+  }
+
+  export type ConversationMessageUncheckedUpdateManyWithoutTestCaseNestedInput = {
+    create?: XOR<ConversationMessageCreateWithoutTestCaseInput, ConversationMessageUncheckedCreateWithoutTestCaseInput> | ConversationMessageCreateWithoutTestCaseInput[] | ConversationMessageUncheckedCreateWithoutTestCaseInput[]
+    connectOrCreate?: ConversationMessageCreateOrConnectWithoutTestCaseInput | ConversationMessageCreateOrConnectWithoutTestCaseInput[]
+    upsert?: ConversationMessageUpsertWithWhereUniqueWithoutTestCaseInput | ConversationMessageUpsertWithWhereUniqueWithoutTestCaseInput[]
+    createMany?: ConversationMessageCreateManyTestCaseInputEnvelope
+    set?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+    disconnect?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+    delete?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+    connect?: ConversationMessageWhereUniqueInput | ConversationMessageWhereUniqueInput[]
+    update?: ConversationMessageUpdateWithWhereUniqueWithoutTestCaseInput | ConversationMessageUpdateWithWhereUniqueWithoutTestCaseInput[]
+    updateMany?: ConversationMessageUpdateManyWithWhereWithoutTestCaseInput | ConversationMessageUpdateManyWithWhereWithoutTestCaseInput[]
+    deleteMany?: ConversationMessageScalarWhereInput | ConversationMessageScalarWhereInput[]
+  }
+
+  export type TestCaseCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<TestCaseCreateWithoutMessagesInput, TestCaseUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: TestCaseCreateOrConnectWithoutMessagesInput
+    connect?: TestCaseWhereUniqueInput
+  }
+
+  export type TestCaseUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: XOR<TestCaseCreateWithoutMessagesInput, TestCaseUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: TestCaseCreateOrConnectWithoutMessagesInput
+    upsert?: TestCaseUpsertWithoutMessagesInput
+    connect?: TestCaseWhereUniqueInput
+    update?: XOR<XOR<TestCaseUpdateToOneWithWhereWithoutMessagesInput, TestCaseUpdateWithoutMessagesInput>, TestCaseUncheckedUpdateWithoutMessagesInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -2298,6 +6964,356 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type TestCaseCreateWithoutTestRunInput = {
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+    messages?: ConversationMessageCreateNestedManyWithoutTestCaseInput
+  }
+
+  export type TestCaseUncheckedCreateWithoutTestRunInput = {
+    id?: number
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+    messages?: ConversationMessageUncheckedCreateNestedManyWithoutTestCaseInput
+  }
+
+  export type TestCaseCreateOrConnectWithoutTestRunInput = {
+    where: TestCaseWhereUniqueInput
+    create: XOR<TestCaseCreateWithoutTestRunInput, TestCaseUncheckedCreateWithoutTestRunInput>
+  }
+
+  export type TestCaseCreateManyTestRunInputEnvelope = {
+    data: TestCaseCreateManyTestRunInput | TestCaseCreateManyTestRunInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TestCaseUpsertWithWhereUniqueWithoutTestRunInput = {
+    where: TestCaseWhereUniqueInput
+    update: XOR<TestCaseUpdateWithoutTestRunInput, TestCaseUncheckedUpdateWithoutTestRunInput>
+    create: XOR<TestCaseCreateWithoutTestRunInput, TestCaseUncheckedCreateWithoutTestRunInput>
+  }
+
+  export type TestCaseUpdateWithWhereUniqueWithoutTestRunInput = {
+    where: TestCaseWhereUniqueInput
+    data: XOR<TestCaseUpdateWithoutTestRunInput, TestCaseUncheckedUpdateWithoutTestRunInput>
+  }
+
+  export type TestCaseUpdateManyWithWhereWithoutTestRunInput = {
+    where: TestCaseScalarWhereInput
+    data: XOR<TestCaseUpdateManyMutationInput, TestCaseUncheckedUpdateManyWithoutTestRunInput>
+  }
+
+  export type TestCaseScalarWhereInput = {
+    AND?: TestCaseScalarWhereInput | TestCaseScalarWhereInput[]
+    OR?: TestCaseScalarWhereInput[]
+    NOT?: TestCaseScalarWhereInput | TestCaseScalarWhereInput[]
+    id?: IntFilter<"TestCase"> | number
+    testRunId?: IntFilter<"TestCase"> | number
+    caseIndex?: IntFilter<"TestCase"> | number
+    problemText?: StringFilter<"TestCase"> | string
+    hasMismatch?: BoolFilter<"TestCase"> | boolean
+    tp?: IntFilter<"TestCase"> | number
+    fp?: IntFilter<"TestCase"> | number
+    fn?: IntFilter<"TestCase"> | number
+    groundTruth?: StringFilter<"TestCase"> | string
+    predicted?: StringFilter<"TestCase"> | string
+  }
+
+  export type TestRunCreateWithoutTestCasesInput = {
+    createdAt?: Date | string
+    totalCases: number
+    tp: number
+    fp: number
+    fn: number
+    precision: number
+    recall: number
+    f1: number
+  }
+
+  export type TestRunUncheckedCreateWithoutTestCasesInput = {
+    id?: number
+    createdAt?: Date | string
+    totalCases: number
+    tp: number
+    fp: number
+    fn: number
+    precision: number
+    recall: number
+    f1: number
+  }
+
+  export type TestRunCreateOrConnectWithoutTestCasesInput = {
+    where: TestRunWhereUniqueInput
+    create: XOR<TestRunCreateWithoutTestCasesInput, TestRunUncheckedCreateWithoutTestCasesInput>
+  }
+
+  export type ConversationMessageCreateWithoutTestCaseInput = {
+    msgOrder: number
+    role: string
+    content: string
+  }
+
+  export type ConversationMessageUncheckedCreateWithoutTestCaseInput = {
+    id?: number
+    msgOrder: number
+    role: string
+    content: string
+  }
+
+  export type ConversationMessageCreateOrConnectWithoutTestCaseInput = {
+    where: ConversationMessageWhereUniqueInput
+    create: XOR<ConversationMessageCreateWithoutTestCaseInput, ConversationMessageUncheckedCreateWithoutTestCaseInput>
+  }
+
+  export type ConversationMessageCreateManyTestCaseInputEnvelope = {
+    data: ConversationMessageCreateManyTestCaseInput | ConversationMessageCreateManyTestCaseInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TestRunUpsertWithoutTestCasesInput = {
+    update: XOR<TestRunUpdateWithoutTestCasesInput, TestRunUncheckedUpdateWithoutTestCasesInput>
+    create: XOR<TestRunCreateWithoutTestCasesInput, TestRunUncheckedCreateWithoutTestCasesInput>
+    where?: TestRunWhereInput
+  }
+
+  export type TestRunUpdateToOneWithWhereWithoutTestCasesInput = {
+    where?: TestRunWhereInput
+    data: XOR<TestRunUpdateWithoutTestCasesInput, TestRunUncheckedUpdateWithoutTestCasesInput>
+  }
+
+  export type TestRunUpdateWithoutTestCasesInput = {
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    precision?: FloatFieldUpdateOperationsInput | number
+    recall?: FloatFieldUpdateOperationsInput | number
+    f1?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type TestRunUncheckedUpdateWithoutTestCasesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalCases?: IntFieldUpdateOperationsInput | number
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    precision?: FloatFieldUpdateOperationsInput | number
+    recall?: FloatFieldUpdateOperationsInput | number
+    f1?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type ConversationMessageUpsertWithWhereUniqueWithoutTestCaseInput = {
+    where: ConversationMessageWhereUniqueInput
+    update: XOR<ConversationMessageUpdateWithoutTestCaseInput, ConversationMessageUncheckedUpdateWithoutTestCaseInput>
+    create: XOR<ConversationMessageCreateWithoutTestCaseInput, ConversationMessageUncheckedCreateWithoutTestCaseInput>
+  }
+
+  export type ConversationMessageUpdateWithWhereUniqueWithoutTestCaseInput = {
+    where: ConversationMessageWhereUniqueInput
+    data: XOR<ConversationMessageUpdateWithoutTestCaseInput, ConversationMessageUncheckedUpdateWithoutTestCaseInput>
+  }
+
+  export type ConversationMessageUpdateManyWithWhereWithoutTestCaseInput = {
+    where: ConversationMessageScalarWhereInput
+    data: XOR<ConversationMessageUpdateManyMutationInput, ConversationMessageUncheckedUpdateManyWithoutTestCaseInput>
+  }
+
+  export type ConversationMessageScalarWhereInput = {
+    AND?: ConversationMessageScalarWhereInput | ConversationMessageScalarWhereInput[]
+    OR?: ConversationMessageScalarWhereInput[]
+    NOT?: ConversationMessageScalarWhereInput | ConversationMessageScalarWhereInput[]
+    id?: IntFilter<"ConversationMessage"> | number
+    testCaseId?: IntFilter<"ConversationMessage"> | number
+    msgOrder?: IntFilter<"ConversationMessage"> | number
+    role?: StringFilter<"ConversationMessage"> | string
+    content?: StringFilter<"ConversationMessage"> | string
+  }
+
+  export type TestCaseCreateWithoutMessagesInput = {
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+    testRun: TestRunCreateNestedOneWithoutTestCasesInput
+  }
+
+  export type TestCaseUncheckedCreateWithoutMessagesInput = {
+    id?: number
+    testRunId: number
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+  }
+
+  export type TestCaseCreateOrConnectWithoutMessagesInput = {
+    where: TestCaseWhereUniqueInput
+    create: XOR<TestCaseCreateWithoutMessagesInput, TestCaseUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type TestCaseUpsertWithoutMessagesInput = {
+    update: XOR<TestCaseUpdateWithoutMessagesInput, TestCaseUncheckedUpdateWithoutMessagesInput>
+    create: XOR<TestCaseCreateWithoutMessagesInput, TestCaseUncheckedCreateWithoutMessagesInput>
+    where?: TestCaseWhereInput
+  }
+
+  export type TestCaseUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: TestCaseWhereInput
+    data: XOR<TestCaseUpdateWithoutMessagesInput, TestCaseUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type TestCaseUpdateWithoutMessagesInput = {
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+    testRun?: TestRunUpdateOneRequiredWithoutTestCasesNestedInput
+  }
+
+  export type TestCaseUncheckedUpdateWithoutMessagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    testRunId?: IntFieldUpdateOperationsInput | number
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TestCaseCreateManyTestRunInput = {
+    id?: number
+    caseIndex: number
+    problemText: string
+    hasMismatch: boolean
+    tp: number
+    fp: number
+    fn: number
+    groundTruth: string
+    predicted: string
+  }
+
+  export type TestCaseUpdateWithoutTestRunInput = {
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+    messages?: ConversationMessageUpdateManyWithoutTestCaseNestedInput
+  }
+
+  export type TestCaseUncheckedUpdateWithoutTestRunInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+    messages?: ConversationMessageUncheckedUpdateManyWithoutTestCaseNestedInput
+  }
+
+  export type TestCaseUncheckedUpdateManyWithoutTestRunInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    caseIndex?: IntFieldUpdateOperationsInput | number
+    problemText?: StringFieldUpdateOperationsInput | string
+    hasMismatch?: BoolFieldUpdateOperationsInput | boolean
+    tp?: IntFieldUpdateOperationsInput | number
+    fp?: IntFieldUpdateOperationsInput | number
+    fn?: IntFieldUpdateOperationsInput | number
+    groundTruth?: StringFieldUpdateOperationsInput | string
+    predicted?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ConversationMessageCreateManyTestCaseInput = {
+    id?: number
+    msgOrder: number
+    role: string
+    content: string
+  }
+
+  export type ConversationMessageUpdateWithoutTestCaseInput = {
+    msgOrder?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ConversationMessageUncheckedUpdateWithoutTestCaseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    msgOrder?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ConversationMessageUncheckedUpdateManyWithoutTestCaseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    msgOrder?: IntFieldUpdateOperationsInput | number
+    role?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
   }
 
 

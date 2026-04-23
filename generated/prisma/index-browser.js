@@ -128,6 +128,39 @@ exports.Prisma.PostScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TestRunScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  totalCases: 'totalCases',
+  tp: 'tp',
+  fp: 'fp',
+  fn: 'fn',
+  precision: 'precision',
+  recall: 'recall',
+  f1: 'f1'
+};
+
+exports.Prisma.TestCaseScalarFieldEnum = {
+  id: 'id',
+  testRunId: 'testRunId',
+  caseIndex: 'caseIndex',
+  problemText: 'problemText',
+  hasMismatch: 'hasMismatch',
+  tp: 'tp',
+  fp: 'fp',
+  fn: 'fn',
+  groundTruth: 'groundTruth',
+  predicted: 'predicted'
+};
+
+exports.Prisma.ConversationMessageScalarFieldEnum = {
+  id: 'id',
+  testCaseId: 'testCaseId',
+  msgOrder: 'msgOrder',
+  role: 'role',
+  content: 'content'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -140,7 +173,10 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Post: 'Post'
+  Post: 'Post',
+  TestRun: 'TestRun',
+  TestCase: 'TestCase',
+  ConversationMessage: 'ConversationMessage'
 };
 
 /**
