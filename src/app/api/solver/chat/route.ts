@@ -1,4 +1,4 @@
-import { ChatCerebras } from "@langchain/cerebras";
+import { ChatOpenAI } from "@langchain/openai";
 import {
   HumanMessage,
   SystemMessage,
@@ -10,10 +10,11 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-const elicitationModel = new ChatCerebras({
-  apiKey: env.CEREBRAS_API_KEY,
-  model: "llama3.1-8b",
+const elicitationModel = new ChatOpenAI({
+  apiKey: env.DEEPSEEK_API_KEY,
+  model: "deepseek-chat",
   temperature: 0.15,
+  configuration: { baseURL: "https://api.deepseek.com/v1" },
 });
 
 const ELICITATION_SYSTEM = `You are an expert operations research assistant specialising in linear programming (LP).

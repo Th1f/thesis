@@ -13,6 +13,8 @@ interface Metrics {
   tp: number;
   fp: number;
   fn: number;
+  varTypeCorrect: number;
+  varTypeTotal: number;
 }
 
 interface MismatchEntry {
@@ -47,7 +49,7 @@ export function SolverEvaluator() {
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [progress, setProgress] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
-  const [metrics, setMetrics] = useState<Metrics>({ tp: 0, fp: 0, fn: 0 });
+  const [metrics, setMetrics] = useState<Metrics>({ tp: 0, fp: 0, fn: 0, varTypeCorrect: 0, varTypeTotal: 0 });
   const [currentLog, setCurrentLog] = useState<CurrentLog>({
     prompt: "",
     response: null,
@@ -91,12 +93,12 @@ export function SolverEvaluator() {
     if (!fileContent) return;
     setIsEvaluating(true);
     setProgress(0);
-    setMetrics({ tp: 0, fp: 0, fn: 0 });
+    setMetrics({ tp: 0, fp: 0, fn: 0, varTypeCorrect: 0, varTypeTotal: 0 });
     setMismatches([]);
     setAllCases([]);
     setIsSaved(false);
 
-    let cTp = 0, cFp = 0, cFn = 0;
+    let cTp = 0, cFp = 0, cFn = 0, cVtCorrect = 0, cVtTotal = 0;
     const casesBuffer: CaseResult[] = [];
     const keys = Object.keys(fileContent);
 
@@ -105,6 +107,7 @@ export function SolverEvaluator() {
       const task = fileContent[key]!;
       const document = task.document as string;
       const truthSubset = {
+        ...(task.var_declarations ? { var_declarations: task.var_declarations } : {}),
         obj_declaration: task.obj_declaration,
         const_declarations: task.const_declarations,
       };
@@ -161,7 +164,7 @@ export function SolverEvaluator() {
       }
 
       const result = finalResult ?? {};
-      const { tp, fp, fn } = evaluateTask(result, truthSubset as Record<string, unknown>);
+      const { tp, fp, fn, varTypeResult } = evaluateTask(result, truthSubset as Record<string, unknown>);
       const hasMismatch = fp > 0 || fn > 0 || Object.keys(result).length === 0;
 
       if (hasMismatch) {
@@ -191,7 +194,9 @@ export function SolverEvaluator() {
       cTp += tp;
       cFp += fp;
       cFn += fn;
-      setMetrics({ tp: cTp, fp: cFp, fn: cFn });
+      cVtCorrect += varTypeResult?.correct ?? 0;
+      cVtTotal += varTypeResult?.total ?? 0;
+      setMetrics({ tp: cTp, fp: cFp, fn: cFn, varTypeCorrect: cVtCorrect, varTypeTotal: cVtTotal });
       setProgress(i + 1);
     }
 
@@ -232,6 +237,7 @@ export function SolverEvaluator() {
   const precision = cTp + cFp > 0 ? (cTp / (cTp + cFp)) * 100 : 0;
   const recall    = cTp + cFn > 0 ? (cTp / (cTp + cFn)) * 100 : 0;
   const f1        = precision + recall > 0 ? (2 * precision * recall) / (precision + recall) : 0;
+  const vtAccuracy = metrics.varTypeTotal > 0 ? (metrics.varTypeCorrect / metrics.varTypeTotal) * 100 : null;
 
   const isDone = !isEvaluating && progress > 0 && progress === totalItems;
 
@@ -298,7 +304,7 @@ export function SolverEvaluator() {
           </div>
 
           {/* Secondary metrics */}
-          <div className="mt-3 grid grid-cols-2 gap-4 text-center">
+          <div className="mt-3 grid grid-cols-3 gap-4 text-center">
             <div className="rounded-xl border border-gray-600 bg-gray-700/30 p-3">
               <div className="font-mono text-2xl font-bold text-purple-400">{recall.toFixed(2)}%</div>
               <div className="mt-1 text-xs font-semibold uppercase tracking-wider text-gray-400">Recall</div>
@@ -308,6 +314,15 @@ export function SolverEvaluator() {
               <div className="font-mono text-2xl font-bold text-teal-400">{f1.toFixed(2)}%</div>
               <div className="mt-1 text-xs font-semibold uppercase tracking-wider text-gray-400">F1 Score</div>
               <div className="font-mono text-[10px] text-gray-500">2·P·R / (P+R)</div>
+            </div>
+            <div className="rounded-xl border border-gray-600 bg-gray-700/30 p-3">
+              <div className="font-mono text-2xl font-bold text-amber-400">
+                {vtAccuracy !== null ? `${vtAccuracy.toFixed(2)}%` : "N/A"}
+              </div>
+              <div className="mt-1 text-xs font-semibold uppercase tracking-wider text-gray-400">Var Type Acc.</div>
+              <div className="font-mono text-[10px] text-gray-500">
+                {vtAccuracy !== null ? `${metrics.varTypeCorrect}/${metrics.varTypeTotal}` : "no ground truth"}
+              </div>
             </div>
           </div>
 
@@ -324,6 +339,7 @@ export function SolverEvaluator() {
                 <button
                   onClick={() =>
                     saveRun.mutate({
+                      datasetType: "nl4opt",
                       totalCases: totalItems,
                       tp: cTp,
                       fp: cFp,

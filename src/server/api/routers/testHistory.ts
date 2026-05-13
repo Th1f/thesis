@@ -22,6 +22,7 @@ export const testHistoryRouter = createTRPCRouter({
   saveRun: publicProcedure
     .input(
       z.object({
+        datasetType: z.string().optional().default("nl4opt"),
         totalCases: z.number(),
         tp: z.number(),
         fp: z.number(),
@@ -35,6 +36,7 @@ export const testHistoryRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return ctx.db.testRun.create({
         data: {
+          datasetType: input.datasetType,
           totalCases: input.totalCases,
           tp: input.tp,
           fp: input.fp,

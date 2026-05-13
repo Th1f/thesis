@@ -137,7 +137,8 @@ exports.Prisma.TestRunScalarFieldEnum = {
   fn: 'fn',
   precision: 'precision',
   recall: 'recall',
-  f1: 'f1'
+  f1: 'f1',
+  datasetType: 'datasetType'
 };
 
 exports.Prisma.TestCaseScalarFieldEnum = {

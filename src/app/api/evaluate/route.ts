@@ -1,4 +1,4 @@
-import { ChatCerebras } from "@langchain/cerebras";
+import { ChatOpenAI } from "@langchain/openai";
 import {
   HumanMessage,
   SystemMessage,
@@ -12,7 +12,9 @@ import { NextResponse } from "next/server";
 const XY_LIKE = new Set(["xy", "xby", "ratio"]);
 
 function normalizeLimit(v: any): string {
-  return String(v ?? "").replace(/[$%,]/g, "").trim();
+  return String(v ?? "")
+    .replace(/[$%,]/g, "")
+    .trim();
 }
 
 function postProcess(parsed: any): any {
@@ -20,15 +22,24 @@ function postProcess(parsed: any): any {
   let cs: any[] = parsed.const_declarations;
 
   // 1. Normalise limit values — strip $, %, commas
-  cs = cs.map((c) => (c.limit !== undefined ? { ...c, limit: normalizeLimit(c.limit) } : c));
+  cs = cs.map((c) =>
+    c.limit !== undefined ? { ...c, limit: normalizeLimit(c.limit) } : c,
+  );
 
   // 2. Remove implicit non-negativity lower bounds (lb = 0)
   cs = cs.filter(
-    (c) => !(c.type === "lowerbound" && c.operator === "GREATER_OR_EQUAL" && normalizeLimit(c.limit) === "0"),
+    (c) =>
+      !(
+        c.type === "lowerbound" &&
+        c.operator === "GREATER_OR_EQUAL" &&
+        normalizeLimit(c.limit) === "0"
+      ),
   );
 
   // 3. Remove constraints whose limit is still not numeric (e.g. "null", free-text)
-  cs = cs.filter((c) => XY_LIKE.has(c.type) || (!isNaN(Number(c.limit)) && c.limit !== ""));
+  cs = cs.filter(
+    (c) => XY_LIKE.has(c.type) || (!isNaN(Number(c.limit)) && c.limit !== ""),
+  );
 
   // 4. Convert linear with all-"1" coefficients → sum (drop terms)
   cs = cs.map((c) => {
@@ -52,7 +63,11 @@ function postProcess(parsed: any): any {
 
   // 6. Convert bounds/linear whose var contains "+" or "vars" array → sum
   cs = cs.map((c) => {
-    if (c.type === "upperbound" || c.type === "lowerbound" || c.type === "linear") {
+    if (
+      c.type === "upperbound" ||
+      c.type === "lowerbound" ||
+      c.type === "linear"
+    ) {
       const varStr = String(c.var ?? "");
       if (varStr.includes("+") || Array.isArray(c.vars)) {
         const { var: _v, vars: _vs, terms: _t, ...rest } = c;
@@ -63,7 +78,8 @@ function postProcess(parsed: any): any {
   });
 
   // 7. Normalise snake_case variable names to spaced names
-  const toSpaced = (s: any) => (typeof s === "string" ? s.replace(/_/g, " ") : s);
+  const toSpaced = (s: any) =>
+    typeof s === "string" ? s.replace(/_/g, " ") : s;
   cs = cs.map((c) => ({
     ...c,
     ...(c.var !== undefined ? { var: toSpaced(c.var) } : {}),
@@ -82,19 +98,33 @@ function postProcess(parsed: any): any {
     return true;
   });
 
-  return { ...parsed, const_declarations: cs };
+  // Normalise var_declarations if present
+  const varDecls = Array.isArray(parsed.var_declarations)
+    ? (parsed.var_declarations as any[]).map((v) => ({
+        name: typeof v.name === "string" ? v.name.replace(/_/g, " ") : v.name,
+        type: v.type ?? "continuous",
+      }))
+    : undefined;
+
+  return {
+    ...(varDecls ? { var_declarations: varDecls } : {}),
+    ...parsed,
+    const_declarations: cs,
+  };
 }
 
-const evaluatorModel = new ChatCerebras({
-  apiKey: env.CEREBRAS_API_KEY,
-  model: "llama3.1-8b",
+const evaluatorModel = new ChatOpenAI({
+  apiKey: env.DEEPSEEK_API_KEY,
+  model: "deepseek-chat",
   temperature: 0.1,
+  configuration: { baseURL: "https://api.deepseek.com/v1" },
 });
 
-const userModel = new ChatCerebras({
-  apiKey: env.CEREBRAS_API_KEY,
-  model: "llama3.1-8b",
+const userModel = new ChatOpenAI({
+  apiKey: env.DEEPSEEK_API_KEY,
+  model: "deepseek-chat",
   temperature: 0.3,
+  configuration: { baseURL: "https://api.deepseek.com/v1" },
 });
 
 export async function POST(req: Request) {
@@ -106,27 +136,34 @@ export async function POST(req: Request) {
     }
 
     const evaluatorSystemPrompt = new SystemMessage(
-      `You are an expert operations research AI mimicking a test suite designed to formulate NL4Opt dataset problems into LP structures.
-A user will come to you with a business problem. You must ask them questions one-by-one to understand the problem fully (variables, constraints, objective).
-DO NOT ask them to formulate the problem, they do not know how to code or use math. You must elicit the information conversationally, for example: "What quantities are you trying to decide?" or "Are there any limits on..."
+      `You are an expert operations research AI formulating Mixed Integer Linear Programming (MILP) problems.
+A user will come to you with a business problem. Ask them questions one-by-one to understand the problem fully (variables, their types, constraints, objective).
+DO NOT ask them to formulate the problem — they do not know math or coding. Elicit the information conversationally.
 
 CRITICAL INSTRUCTIONS:
 1. VARIABLE NAMES: Use the EXACT shortest noun phrase from the text (e.g. "color printers", NOT "cp", NOT "color printers production"). Never use snake_case — always use spaces.
-2. CONSTRAINT DIRECTIONS: For "direction", extract the exact trigger phrase from the problem description (e.g., "at most", "less than", "budget").
-3. CONSTRAINT TYPES — use the correct type:
+2. VARIABLE TYPES — for each variable, ask whether it must be a whole number:
+   - "integer": countable discrete items (trucks, machines, people). Ask "does this need to be a whole number?"
+   - "binary": yes/no decisions (open a factory or not). Ask "is this a yes-or-no choice?"
+   - "continuous": fractional amounts (kg, hours, dollars).
+3. CONSTRAINT DIRECTIONS: For "direction", extract the exact trigger phrase from the problem description (e.g., "at most", "less than", "budget").
+4. CONSTRAINT TYPES — use the correct type:
    - "upperbound"/"lowerbound" for a SINGLE variable bound. NEVER put "+" or two variable names in the var field.
-   - "sum" when a limit applies to the TOTAL of ALL variables (e.g. "at most 150 total", "minimum of 100 lamps"). No "var" or "terms" field.
-   - "xby" when one variable is a MULTIPLE of another (e.g. "at least four times"). Use "xby" NOT "lowerbound" with a number. The "param" field holds the multiplier word (e.g. "four", "twice").
+   - "sum" when a limit applies to the TOTAL of ALL variables (e.g. "at most 150 total"). No "var" or "terms" field.
+   - "xby" when one variable is a MULTIPLE of another. The "param" field holds the multiplier word (e.g. "four", "twice").
    - "xy" for direct variable comparisons with no multiplier.
    - "linear" for mixed-coefficient constraints with numeric RHS.
-4. When a sentence mentions bounds on MULTIPLE variables, create a SEPARATE entry for EACH — do not skip any.
-5. NO DUPLICATES: Before outputting JSON, do a SELF-CHECK — remove entries that share the same type, operator, and limit.
-6. DO NOT output the final JSON until you have all the necessary information.
-7. NEVER add non-negativity constraints (lower bound = 0). These are implicit and not part of the output.
-8. NEVER say goodbye or use farewell phrases. Output the JSON immediately when done.
-9. When you have all the information, output ONLY valid JSON using this exact schema:
+5. When a sentence mentions bounds on MULTIPLE variables, create a SEPARATE entry for EACH — do not skip any.
+6. NO DUPLICATES: Before outputting JSON, do a SELF-CHECK — remove entries that share the same type, operator, and limit.
+7. DO NOT output the final JSON until you have all variable types, constraints, and coefficients confirmed.
+8. NEVER add non-negativity constraints (lower bound = 0). These are implicit and not part of the output.
+9. NEVER say goodbye or use farewell phrases. Output the JSON immediately when done.
+10. When you have all the information, output ONLY valid JSON using this exact schema:
 
 {
+  "var_declarations": [
+    { "name": "exact_variable_name_from_text", "type": "continuous" | "integer" | "binary" }
+  ],
   "obj_declaration": {
     "type": "objective",
     "direction": "maximize" or "minimize",
@@ -183,18 +220,21 @@ Return ONLY valid JSON. No markdown formatting, no explanations.`,
     );
 
     const userSystemPrompt = new SystemMessage(
-      `You are a business owner who needs help with an optimization problem. Here is your problem document:
+      `You are a small business owner who needs help planning your business. Here is your situation:
 <document>
 ${document}
 </document>
 
-You do not know how to formulate mathematical models. An expert will ask you questions to help formulate your problem.
+You have NEVER heard of linear programming, optimization, or operations research. You do not know what "constraints", "variables", "objective function", "maximize", "minimize", or "coefficients" mean in a mathematical sense. You only understand your own business in plain everyday language.
+
 CRITICAL INSTRUCTIONS:
-1. Answer ONLY what they ask. Be concise.
-2. When naming variables, use the SHORTEST exact noun phrase from your document (e.g. "wired headphones", NOT "wired headphones production").
-3. When a sentence mentions multiple items with the same constraint (e.g. "at least 5 apples and 10 pears"), state ALL of them — do not drop any.
-4. DO NOT give away the entire problem at once. Give information bit by bit.
-5. Do not try to fix the problem — if the expert gets something wrong, just answer naturally.`,
+1. Answer ONLY what is asked. Be concise and use plain, non-technical business language.
+2. If asked about "decision variables" or "constraints", respond with confusion (e.g. "I'm not sure what you mean by that — can you explain?") and then answer in your own words about your business.
+3. Never use LP or math jargon. Say things like "I need to figure out how many to make", NOT "the decision variable is...".
+4. Refer to numbers and limits using everyday phrases: "we can't spend more than...", "we need at least...", "I want to make as much money as possible", etc.
+5. When asked about multiple items with the same rule (e.g. "at least 5 apples and 10 pears"), state ALL of them — do not drop any.
+6. Do NOT volunteer all information at once. Answer one question at a time, naturally.
+7. If the expert says something that sounds like math or jargon you don't recognise, ask them to explain in simpler terms before answering.`,
     );
 
     const encoder = new TextEncoder();
@@ -210,8 +250,9 @@ CRITICAL INSTRUCTIONS:
         let finalJsonString: string | null = null;
 
         const isFarewell = (text: string) =>
-          /have a (great|good|wonderful|nice)|good(bye| luck|-bye)|best of luck|it was a pleasure|thanks? for (your|the)|all the best|take care|see you|enjoy your|you('re| are) welcome/i
-            .test(text);
+          /have a (great|good|wonderful|nice)|good(bye| luck|-bye)|best of luck|it was a pleasure|thanks? for (your|the)|all the best|take care|see you|enjoy your|you('re| are) welcome/i.test(
+            text,
+          );
 
         const FORCE_JSON_MSG =
           "You have all the information you need. Output ONLY the final JSON now. No goodbye, no explanation — just the JSON object.";

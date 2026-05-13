@@ -21,16 +21,17 @@ model Post {
 }
 
 model TestRun {
-    id         Int        @id @default(autoincrement())
-    createdAt  DateTime   @default(now())
-    totalCases Int
-    tp         Int
-    fp         Int
-    fn         Int
-    precision  Float
-    recall     Float
-    f1         Float
-    testCases  TestCase[]
+    id          Int        @id @default(autoincrement())
+    createdAt   DateTime   @default(now())
+    totalCases  Int
+    tp          Int
+    fp          Int
+    fn          Int
+    precision   Float
+    recall      Float
+    f1          Float
+    datasetType String     @default("nl4opt")
+    testCases   TestCase[]
 }
 
 model TestCase {

@@ -185,6 +185,13 @@ function RunCard({ runId, onDeleted }: { runId: number; onDeleted: () => void })
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <span className="font-mono text-sm font-bold text-white">Run #{run.id}</span>
+            <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${
+              run.datasetType === "complexor"
+                ? "bg-emerald-900/60 text-emerald-400"
+                : "bg-blue-900/60 text-blue-400"
+            }`}>
+              {run.datasetType === "complexor" ? "ComplexOR" : "NL4Opt"}
+            </span>
             <span className="text-xs text-gray-500">{formatDate(run.createdAt)}</span>
           </div>
           <div className="mt-1.5 flex flex-wrap gap-2">

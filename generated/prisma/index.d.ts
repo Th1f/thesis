@@ -2255,6 +2255,7 @@ export namespace Prisma {
     precision: number | null
     recall: number | null
     f1: number | null
+    datasetType: string | null
   }
 
   export type TestRunMaxAggregateOutputType = {
@@ -2267,6 +2268,7 @@ export namespace Prisma {
     precision: number | null
     recall: number | null
     f1: number | null
+    datasetType: string | null
   }
 
   export type TestRunCountAggregateOutputType = {
@@ -2279,6 +2281,7 @@ export namespace Prisma {
     precision: number
     recall: number
     f1: number
+    datasetType: number
     _all: number
   }
 
@@ -2315,6 +2318,7 @@ export namespace Prisma {
     precision?: true
     recall?: true
     f1?: true
+    datasetType?: true
   }
 
   export type TestRunMaxAggregateInputType = {
@@ -2327,6 +2331,7 @@ export namespace Prisma {
     precision?: true
     recall?: true
     f1?: true
+    datasetType?: true
   }
 
   export type TestRunCountAggregateInputType = {
@@ -2339,6 +2344,7 @@ export namespace Prisma {
     precision?: true
     recall?: true
     f1?: true
+    datasetType?: true
     _all?: true
   }
 
@@ -2438,6 +2444,7 @@ export namespace Prisma {
     precision: number
     recall: number
     f1: number
+    datasetType: string
     _count: TestRunCountAggregateOutputType | null
     _avg: TestRunAvgAggregateOutputType | null
     _sum: TestRunSumAggregateOutputType | null
@@ -2469,6 +2476,7 @@ export namespace Prisma {
     precision?: boolean
     recall?: boolean
     f1?: boolean
+    datasetType?: boolean
     testCases?: boolean | TestRun$testCasesArgs<ExtArgs>
     _count?: boolean | TestRunCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["testRun"]>
@@ -2483,6 +2491,7 @@ export namespace Prisma {
     precision?: boolean
     recall?: boolean
     f1?: boolean
+    datasetType?: boolean
   }, ExtArgs["result"]["testRun"]>
 
   export type TestRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2495,6 +2504,7 @@ export namespace Prisma {
     precision?: boolean
     recall?: boolean
     f1?: boolean
+    datasetType?: boolean
   }, ExtArgs["result"]["testRun"]>
 
   export type TestRunSelectScalar = {
@@ -2507,9 +2517,10 @@ export namespace Prisma {
     precision?: boolean
     recall?: boolean
     f1?: boolean
+    datasetType?: boolean
   }
 
-  export type TestRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "totalCases" | "tp" | "fp" | "fn" | "precision" | "recall" | "f1", ExtArgs["result"]["testRun"]>
+  export type TestRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "totalCases" | "tp" | "fp" | "fn" | "precision" | "recall" | "f1" | "datasetType", ExtArgs["result"]["testRun"]>
   export type TestRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     testCases?: boolean | TestRun$testCasesArgs<ExtArgs>
     _count?: boolean | TestRunCountOutputTypeDefaultArgs<ExtArgs>
@@ -2532,6 +2543,7 @@ export namespace Prisma {
       precision: number
       recall: number
       f1: number
+      datasetType: string
     }, ExtArgs["result"]["testRun"]>
     composites: {}
   }
@@ -2965,6 +2977,7 @@ export namespace Prisma {
     readonly precision: FieldRef<"TestRun", 'Float'>
     readonly recall: FieldRef<"TestRun", 'Float'>
     readonly f1: FieldRef<"TestRun", 'Float'>
+    readonly datasetType: FieldRef<"TestRun", 'String'>
   }
     
 
@@ -5735,7 +5748,8 @@ export namespace Prisma {
     fn: 'fn',
     precision: 'precision',
     recall: 'recall',
-    f1: 'f1'
+    f1: 'f1',
+    datasetType: 'datasetType'
   };
 
   export type TestRunScalarFieldEnum = (typeof TestRunScalarFieldEnum)[keyof typeof TestRunScalarFieldEnum]
@@ -5917,6 +5931,7 @@ export namespace Prisma {
     precision?: FloatFilter<"TestRun"> | number
     recall?: FloatFilter<"TestRun"> | number
     f1?: FloatFilter<"TestRun"> | number
+    datasetType?: StringFilter<"TestRun"> | string
     testCases?: TestCaseListRelationFilter
   }
 
@@ -5930,6 +5945,7 @@ export namespace Prisma {
     precision?: SortOrder
     recall?: SortOrder
     f1?: SortOrder
+    datasetType?: SortOrder
     testCases?: TestCaseOrderByRelationAggregateInput
   }
 
@@ -5946,6 +5962,7 @@ export namespace Prisma {
     precision?: FloatFilter<"TestRun"> | number
     recall?: FloatFilter<"TestRun"> | number
     f1?: FloatFilter<"TestRun"> | number
+    datasetType?: StringFilter<"TestRun"> | string
     testCases?: TestCaseListRelationFilter
   }, "id">
 
@@ -5959,6 +5976,7 @@ export namespace Prisma {
     precision?: SortOrder
     recall?: SortOrder
     f1?: SortOrder
+    datasetType?: SortOrder
     _count?: TestRunCountOrderByAggregateInput
     _avg?: TestRunAvgOrderByAggregateInput
     _max?: TestRunMaxOrderByAggregateInput
@@ -5979,6 +5997,7 @@ export namespace Prisma {
     precision?: FloatWithAggregatesFilter<"TestRun"> | number
     recall?: FloatWithAggregatesFilter<"TestRun"> | number
     f1?: FloatWithAggregatesFilter<"TestRun"> | number
+    datasetType?: StringWithAggregatesFilter<"TestRun"> | string
   }
 
   export type TestCaseWhereInput = {
@@ -6178,6 +6197,7 @@ export namespace Prisma {
     precision: number
     recall: number
     f1: number
+    datasetType?: string
     testCases?: TestCaseCreateNestedManyWithoutTestRunInput
   }
 
@@ -6191,6 +6211,7 @@ export namespace Prisma {
     precision: number
     recall: number
     f1: number
+    datasetType?: string
     testCases?: TestCaseUncheckedCreateNestedManyWithoutTestRunInput
   }
 
@@ -6203,6 +6224,7 @@ export namespace Prisma {
     precision?: FloatFieldUpdateOperationsInput | number
     recall?: FloatFieldUpdateOperationsInput | number
     f1?: FloatFieldUpdateOperationsInput | number
+    datasetType?: StringFieldUpdateOperationsInput | string
     testCases?: TestCaseUpdateManyWithoutTestRunNestedInput
   }
 
@@ -6216,6 +6238,7 @@ export namespace Prisma {
     precision?: FloatFieldUpdateOperationsInput | number
     recall?: FloatFieldUpdateOperationsInput | number
     f1?: FloatFieldUpdateOperationsInput | number
+    datasetType?: StringFieldUpdateOperationsInput | string
     testCases?: TestCaseUncheckedUpdateManyWithoutTestRunNestedInput
   }
 
@@ -6229,6 +6252,7 @@ export namespace Prisma {
     precision: number
     recall: number
     f1: number
+    datasetType?: string
   }
 
   export type TestRunUpdateManyMutationInput = {
@@ -6240,6 +6264,7 @@ export namespace Prisma {
     precision?: FloatFieldUpdateOperationsInput | number
     recall?: FloatFieldUpdateOperationsInput | number
     f1?: FloatFieldUpdateOperationsInput | number
+    datasetType?: StringFieldUpdateOperationsInput | string
   }
 
   export type TestRunUncheckedUpdateManyInput = {
@@ -6252,6 +6277,7 @@ export namespace Prisma {
     precision?: FloatFieldUpdateOperationsInput | number
     recall?: FloatFieldUpdateOperationsInput | number
     f1?: FloatFieldUpdateOperationsInput | number
+    datasetType?: StringFieldUpdateOperationsInput | string
   }
 
   export type TestCaseCreateInput = {
@@ -6542,6 +6568,7 @@ export namespace Prisma {
     precision?: SortOrder
     recall?: SortOrder
     f1?: SortOrder
+    datasetType?: SortOrder
   }
 
   export type TestRunAvgOrderByAggregateInput = {
@@ -6565,6 +6592,7 @@ export namespace Prisma {
     precision?: SortOrder
     recall?: SortOrder
     f1?: SortOrder
+    datasetType?: SortOrder
   }
 
   export type TestRunMinOrderByAggregateInput = {
@@ -6577,6 +6605,7 @@ export namespace Prisma {
     precision?: SortOrder
     recall?: SortOrder
     f1?: SortOrder
+    datasetType?: SortOrder
   }
 
   export type TestRunSumOrderByAggregateInput = {
@@ -7071,6 +7100,7 @@ export namespace Prisma {
     precision: number
     recall: number
     f1: number
+    datasetType?: string
   }
 
   export type TestRunUncheckedCreateWithoutTestCasesInput = {
@@ -7083,6 +7113,7 @@ export namespace Prisma {
     precision: number
     recall: number
     f1: number
+    datasetType?: string
   }
 
   export type TestRunCreateOrConnectWithoutTestCasesInput = {
@@ -7133,6 +7164,7 @@ export namespace Prisma {
     precision?: FloatFieldUpdateOperationsInput | number
     recall?: FloatFieldUpdateOperationsInput | number
     f1?: FloatFieldUpdateOperationsInput | number
+    datasetType?: StringFieldUpdateOperationsInput | string
   }
 
   export type TestRunUncheckedUpdateWithoutTestCasesInput = {
@@ -7145,6 +7177,7 @@ export namespace Prisma {
     precision?: FloatFieldUpdateOperationsInput | number
     recall?: FloatFieldUpdateOperationsInput | number
     f1?: FloatFieldUpdateOperationsInput | number
+    datasetType?: StringFieldUpdateOperationsInput | string
   }
 
   export type ConversationMessageUpsertWithWhereUniqueWithoutTestCaseInput = {

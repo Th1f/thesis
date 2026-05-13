@@ -1,4 +1,4 @@
-import { ChatCerebras } from "@langchain/cerebras";
+import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { env } from "../../../../env";
 import { NextResponse } from "next/server";
@@ -6,16 +6,18 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 // ─── Models ──────────────────────────────────────────────────────────────────
-const bigModel = new ChatCerebras({
-  apiKey: env.CEREBRAS_API_KEY,
-  model: "llama3.1-8b",
+const bigModel = new ChatOpenAI({
+  apiKey: env.DEEPSEEK_API_KEY,
+  model: "deepseek-chat",
   temperature: 0.1,
+  configuration: { baseURL: "https://api.deepseek.com/v1" },
 });
 
-const criticModel = new ChatCerebras({
-  apiKey: env.CEREBRAS_API_KEY,
-  model: "llama3.1-8b",
+const criticModel = new ChatOpenAI({
+  apiKey: env.DEEPSEEK_API_KEY,
+  model: "deepseek-chat",
   temperature: 0.05,
+  configuration: { baseURL: "https://api.deepseek.com/v1" },
 });
 
 // ─── System Prompts ───────────────────────────────────────────────────────────
@@ -139,7 +141,8 @@ function extractJsonBlock(text: string, tag: string): any {
   }
 }
 
-const PYTHON_RUNNER_URL = process.env.PYTHON_RUNNER_URL ?? "http://localhost:8000";
+const PYTHON_RUNNER_URL =
+  process.env.PYTHON_RUNNER_URL ?? "http://localhost:8000";
 
 async function runPython(
   code: string,
@@ -175,7 +178,11 @@ export async function POST(req: Request) {
           const problemStr = JSON.stringify(problem, null, 2);
 
           // ── Stage 1: Formulation ──────────────────────────────────────────
-          enq({ type: "stage", name: "formulation", message: "Generating Python LP code…" });
+          enq({
+            type: "stage",
+            name: "formulation",
+            message: "Generating Python LP code…",
+          });
 
           const formPrompt = `Conversation context:\n${conversationSummary}\n\nExtracted LP structure:\n${problemStr}\n\nGenerate the scipy Python code and LP JSON model.`;
           const formResp = await bigModel.invoke([
@@ -189,7 +196,10 @@ export async function POST(req: Request) {
           const lpJson = extractJsonBlock(formText, "LP_JSON");
 
           if (!pythonCode) {
-            enq({ type: "error", message: "Formulation agent did not produce Python code." });
+            enq({
+              type: "error",
+              message: "Formulation agent did not produce Python code.",
+            });
             controller.close();
             return;
           }
@@ -198,7 +208,11 @@ export async function POST(req: Request) {
           if (lpJson) enq({ type: "lp_model", model: lpJson });
 
           // ── Stage 2: Code Critic (up to 3 iterations) ────────────────────
-          enq({ type: "stage", name: "critic", message: "Running code critic…" });
+          enq({
+            type: "stage",
+            name: "critic",
+            message: "Running code critic…",
+          });
 
           for (let iter = 1; iter <= 3; iter++) {
             const criticPrompt = `Original LP problem:\n${problemStr}\n\nConversation context:\n${conversationSummary}\n\nPython code to review:\n\`\`\`python\n${pythonCode}\n\`\`\``;
@@ -247,13 +261,21 @@ export async function POST(req: Request) {
               const revisedCode = extractBlock(fixText, "PYTHON_CODE");
               if (revisedCode) {
                 pythonCode = revisedCode;
-                enq({ type: "code_revised", code: pythonCode, iteration: iter });
+                enq({
+                  type: "code_revised",
+                  code: pythonCode,
+                  iteration: iter,
+                });
               }
             }
           }
 
           // ── Stage 3: Execution ────────────────────────────────────────────
-          enq({ type: "stage", name: "execution", message: "Executing Python solver…" });
+          enq({
+            type: "stage",
+            name: "execution",
+            message: "Executing Python solver…",
+          });
 
           let execResult = await runPython(pythonCode);
           enq({
@@ -285,14 +307,21 @@ export async function POST(req: Request) {
             }
 
             if (!execResult.success) {
-              enq({ type: "error", message: "Python solver failed after auto-fix attempt." });
+              enq({
+                type: "error",
+                message: "Python solver failed after auto-fix attempt.",
+              });
               controller.close();
               return;
             }
           }
 
           // ── Stage 4: Presentation ─────────────────────────────────────────
-          enq({ type: "stage", name: "presentation", message: "Generating plain-English explanation…" });
+          enq({
+            type: "stage",
+            name: "presentation",
+            message: "Generating plain-English explanation…",
+          });
 
           const presentPrompt = `Problem context (conversation summary):\n${conversationSummary}\n\nVariable details:\n${JSON.stringify(problem.variables, null, 2)}\n\nSolver output:\n${execResult.output}\n\nExplain this result to the user.`;
           const presentResp = await bigModel.invoke([
@@ -303,7 +332,10 @@ export async function POST(req: Request) {
             typeof presentResp.content === "string" ? presentResp.content : "";
           enq({ type: "presentation", text: presentText });
         } catch (err: any) {
-          enq({ type: "error", message: err.message ?? "Solver pipeline failed" });
+          enq({
+            type: "error",
+            message: err.message ?? "Solver pipeline failed",
+          });
         } finally {
           controller.close();
         }
@@ -311,10 +343,16 @@ export async function POST(req: Request) {
     });
 
     return new Response(stream, {
-      headers: { "Content-Type": "application/x-ndjson", "Cache-Control": "no-cache" },
+      headers: {
+        "Content-Type": "application/x-ndjson",
+        "Cache-Control": "no-cache",
+      },
     });
   } catch (error) {
     console.error("Solve API error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }

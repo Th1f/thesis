@@ -4,12 +4,15 @@ import { useState } from "react";
 import Link from "next/link";
 import { SolverChat } from "../_components/SolverChat";
 import { SolverEvaluator } from "../_components/SolverEvaluator";
+import { ComplexOREvaluator } from "../_components/ComplexOREvaluator";
 import { TestHistory } from "../_components/TestHistory";
 
 type Tab = "solve" | "test" | "history";
+type DatasetType = "nl4opt" | "complexor";
 
 export default function SolverPage() {
   const [tab, setTab] = useState<Tab>("solve");
+  const [datasetType, setDatasetType] = useState<DatasetType>("nl4opt");
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-[#212121] to-[#36373f] px-4 pb-12 text-white">
@@ -83,7 +86,34 @@ export default function SolverPage() {
 
       {/* Tab Content */}
       {tab === "solve" && <SolverChat />}
-      {tab === "test" && <SolverEvaluator />}
+      {tab === "test" && (
+        <div className="flex w-full max-w-7xl flex-col items-center">
+          {/* Dataset type selector */}
+          <div className="mb-4 flex w-full max-w-6xl gap-1 rounded-xl border border-gray-700 bg-gray-800/40 p-1">
+            <button
+              onClick={() => setDatasetType("nl4opt")}
+              className={`flex-1 rounded-lg py-2 text-sm font-semibold transition-all ${
+                datasetType === "nl4opt"
+                  ? "bg-blue-600 text-white shadow"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              NL4Opt Dataset
+            </button>
+            <button
+              onClick={() => setDatasetType("complexor")}
+              className={`flex-1 rounded-lg py-2 text-sm font-semibold transition-all ${
+                datasetType === "complexor"
+                  ? "bg-emerald-600 text-white shadow"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              ComplexOR Dataset
+            </button>
+          </div>
+          {datasetType === "nl4opt" ? <SolverEvaluator /> : <ComplexOREvaluator />}
+        </div>
+      )}
       {tab === "history" && <TestHistory />}
     </main>
   );

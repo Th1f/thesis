@@ -4,7 +4,18 @@
       "Bash(npx tsc *)",
       "Bash(npx next *)",
       "Bash(npm install *)",
-      "Bash(npx prisma *)"
+      "Bash(npx prisma *)",
+      "Bash(python3 -m json.tool)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:docs.puter.com)",
+      "WebFetch(domain:developer.puter.com)",
+      "WebSearch",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('main:', d.get\\('main'\\)\\); print\\('module:', d.get\\('module'\\)\\); print\\('type:', d.get\\('type'\\)\\); print\\('exports:', list\\(d.get\\('exports', {}\\).keys\\(\\)\\)[:5] if isinstance\\(d.get\\('exports'\\), dict\\) else d.get\\('exports'\\)\\)\")",
+      "WebFetch(domain:api.github.com)",
+      "Bash(python -c ' *)",
+      "Bash(python scripts/annotate_complexor.py)"
     ]
   }
 }
