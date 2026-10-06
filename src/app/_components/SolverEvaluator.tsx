@@ -251,9 +251,9 @@ export function SolverEvaluator() {
       </p>
 
       {/* File upload + run */}
-      <div className="mb-6 flex w-full items-center gap-4">
+      <div className="mb-6 flex w-full flex-col items-stretch gap-4 sm:flex-row sm:items-center">
         <input
-          type="file"
+          type="file" aria-label="Evaluation dataset"
           accept=".json,.jsonl"
           onChange={handleFileUpload}
           disabled={isEvaluating}

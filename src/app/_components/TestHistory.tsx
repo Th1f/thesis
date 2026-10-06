@@ -162,7 +162,7 @@ function RunCard({ runId, onDeleted }: { runId: number; onDeleted: () => void })
   const { data: runs } = api.testHistory.listRuns.useQuery();
   const run = runs?.find((r) => r.id === runId);
 
-  const { data: runDetail, isLoading: detailLoading } = api.testHistory.getRun.useQuery(
+  const { data: runDetail, isLoading: detailLoading, error: detailError, refetch: retryDetail } = api.testHistory.getRun.useQuery(
     { id: runId },
     { enabled: expanded },
   );
@@ -251,7 +251,7 @@ function RunCard({ runId, onDeleted }: { runId: number; onDeleted: () => void })
             <div className="flex items-center justify-center py-8 text-sm text-gray-500">
               Loading cases…
             </div>
-          ) : runDetail ? (
+          ) : detailError ? (<div className="request-error" role="alert"><h3>This run could not be loaded</h3><p>Try loading the run again.</p><button className="text-button" onClick={() => void retryDetail()}>Retry run</button></div>) : runDetail ? (
             <div className="flex flex-col gap-2">
               {/* Case filter summary */}
               <div className="mb-2 flex items-center gap-4 text-xs text-gray-500">
@@ -278,7 +278,7 @@ function RunCard({ runId, onDeleted }: { runId: number; onDeleted: () => void })
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export function TestHistory() {
-  const { data: runs, isLoading, refetch } = api.testHistory.listRuns.useQuery();
+  const { data: runs, isLoading, error, refetch } = api.testHistory.listRuns.useQuery();
 
   return (
     <div className="mt-4 mb-4 flex w-full max-w-6xl flex-col rounded-xl border border-gray-700 bg-gray-800/60 p-6 shadow-lg backdrop-blur-sm">
@@ -303,7 +303,7 @@ export function TestHistory() {
         <div className="flex items-center justify-center py-16 text-sm text-gray-500">
           Loading history…
         </div>
-      ) : !runs || runs.length === 0 ? (
+      ) : error ? (<div className="request-error" role="alert"><h3>History could not be loaded</h3><p>The history service is unavailable. Your saved runs may still be there.</p><button className="text-button" onClick={() => void refetch()}>Try again</button></div>) : !runs || runs.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-gray-700 py-16 text-center">
           <div className="text-4xl text-gray-700">📋</div>
           <div className="mt-3 text-sm font-semibold text-gray-400">No test runs saved yet</div>

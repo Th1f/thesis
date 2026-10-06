@@ -1,4 +1,57 @@
-# Variable Name Matching in LP Model Evaluation
+# LP Model Evaluator — Proof
+
+A problem-first workspace for linear programming. Describe a problem, confirm the agent’s summary, inspect the model, and follow formulation, code review, Python execution and explanation.
+
+## Run locally
+
+Use Node.js 24 and npm. Copy `.env.example` to `.env` and fill in your own values:
+
+- `DEEPSEEK_API_KEY`: used by the existing chat and solver agents.
+- `DATABASE_URL`: PostgreSQL connection for saved evaluation history.
+- `PYTHON_RUNNER_URL`: URL of the Python runner (defaults to `http://localhost:8000`).
+
+Run `npm install`, then `npm run dev`. Installation generates the Prisma client. Start the existing Python runner separately (see `services/python-runner`); code execution requires it. Apply the existing Prisma migrations to your development database with `npm run db:migrate` before saving evaluation history.
+
+For a production build, use `npm run build` and `npm start`. The build generates Prisma into its standard package location, keeping its runtime external to the Next.js bundle and avoiding a Windows home-directory trace. The database schema and stored data are unchanged.
+
+## Workspace
+
+- `/`: Proof solver workspace.
+- `/evaluation`: NL4Opt, ComplexOR, baseline and saved evaluation history.
+- The previous `/solver` and `/prototypes/lp` URLs redirect to the workspace.
+
+Examples only fill the problem input. Responses and results come from the configured services. The agent must confirm a structured problem before **Solve model** becomes available. **Stop waiting** cancels the browser request; already-started server work may continue. Runs remain in this tab’s memory; **Export run** downloads the conversation, model and received outputs before leaving or reloading.
+
+## Verification
+
+`npm run typecheck` checks TypeScript. `npm run test:solver` runs the stream-decoding and pipeline regression tests with Node 24. Browser integration was checked with Playwright MCP and controlled endpoint responses; that verifies the UI contract without spending AI credits, but does not establish live provider or Python-runner availability.
+
+## Railway deployment
+
+Live workspace: https://proof-web-production-e992.up.railway.app/
+
+The Railway project `thesis` contains:
+- `proof-web`: this Next.js application, public port 8080.
+- `thesis`: the existing Python runner, reached privately at `http://thesis.railway.internal:8000`.
+- `Postgres`: persistent evaluation history.
+
+Configure these variables on `proof-web`:
+- `DEEPSEEK_API_KEY`: secret, set through Railway variables.
+- `DATABASE_URL=${{Postgres.DATABASE_URL}}`: Railway reference to the database.
+- `PYTHON_RUNNER_URL=http://thesis.railway.internal:8000`
+- `NODE_ENV=production`
+- `PORT=8080`
+
+The Docker image excludes local environment files and uses non-secret placeholders only during the build. Startup applies the existing Prisma migrations before listening on `0.0.0.0:$PORT`. The Railway configuration also declares a migration pre-deploy command and a root-page health check. Startup migration is retained because the initial CLI deployment did not apply the declared pre-deploy hook.
+
+For updates, run `railway up --service proof-web --detach` from this repository after linking the `thesis` project. Always name `proof-web` so an upload cannot replace the Python runner. View app logs with `railway logs --service proof-web`.
+
+Deployment verification on 2026-10-06: a real Playwright MCP workflow on the public URL completed clarification, formulation, review, Python execution and explanation. The workshop result was 30 chairs, 5 desks, optimum 1550. Production history was verified by saving, listing and reading a temporary record with nested messages, then removing that test record. Interactive solver conversations still remain in browser tab memory; PostgreSQL stores evaluation runs explicitly saved to History.
+
+
+## Variable-name matching
+
+### Matching predicted and ground-truth variables
 
 When comparing a predicted LP model against a ground-truth model, variable names must be matched flexibly. The same variable may be expressed differently by the LLM versus the benchmark — e.g. `"number of pears produced"` vs `"pears"`. The matching pipeline handles this through four sequential checks.
 

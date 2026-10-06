@@ -1,0 +1,548 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T05:33:34.614Z",
+  "title": "Design System: LP Model Evaluator — Proof",
+  "extensions": {
+    "scope": {
+      "routes": [
+        "/",
+        "/evaluation"
+      ],
+      "status": "selected-and-integrated",
+      "selectedDirection": "Proof",
+      "selectionDate": "2026-10-06",
+      "productionIdentity": true,
+      "source": "src/styles/proof.css",
+      "legacyRoute": {
+        "path": "/prototypes/lp",
+        "redirect": "/"
+      },
+      "figmaDeliverable": false,
+      "rasterAssets": false
+    },
+    "colorMeta": {
+      "proof-bg": {
+        "role": "neutral",
+        "displayName": "proof bg",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0045 258.32)",
+          "oklch(26.4% 0.0045 258.32)",
+          "oklch(37.9% 0.0045 258.32)",
+          "oklch(49.3% 0.0045 258.32)",
+          "oklch(60.7% 0.0045 258.32)",
+          "oklch(72.1% 0.0045 258.32)",
+          "oklch(83.6% 0.0045 258.32)",
+          "oklch(95% 0.0045 258.32)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-surface": {
+        "role": "neutral",
+        "displayName": "proof surface",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26.4% 0.0000 89.88)",
+          "oklch(37.9% 0.0000 89.88)",
+          "oklch(49.3% 0.0000 89.88)",
+          "oklch(60.7% 0.0000 89.88)",
+          "oklch(72.1% 0.0000 89.88)",
+          "oklch(83.6% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-ink": {
+        "role": "neutral",
+        "displayName": "proof ink",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0499 252.97)",
+          "oklch(26.4% 0.0499 252.97)",
+          "oklch(37.9% 0.0499 252.97)",
+          "oklch(49.3% 0.0499 252.97)",
+          "oklch(60.7% 0.0499 252.97)",
+          "oklch(72.1% 0.0499 252.97)",
+          "oklch(83.6% 0.0499 252.97)",
+          "oklch(95% 0.0499 252.97)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-muted": {
+        "role": "neutral",
+        "displayName": "proof muted",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0285 252.09)",
+          "oklch(26.4% 0.0285 252.09)",
+          "oklch(37.9% 0.0285 252.09)",
+          "oklch(49.3% 0.0285 252.09)",
+          "oklch(60.7% 0.0285 252.09)",
+          "oklch(72.1% 0.0285 252.09)",
+          "oklch(83.6% 0.0285 252.09)",
+          "oklch(95% 0.0285 252.09)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-line": {
+        "role": "neutral",
+        "displayName": "proof line",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0144 254.61)",
+          "oklch(26.4% 0.0144 254.61)",
+          "oklch(37.9% 0.0144 254.61)",
+          "oklch(49.3% 0.0144 254.61)",
+          "oklch(60.7% 0.0144 254.61)",
+          "oklch(72.1% 0.0144 254.61)",
+          "oklch(83.6% 0.0144 254.61)",
+          "oklch(95% 0.0144 254.61)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-accent": {
+        "role": "primary",
+        "displayName": "proof accent",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.1958 264.38)",
+          "oklch(26.4% 0.1958 264.38)",
+          "oklch(37.9% 0.1958 264.38)",
+          "oklch(49.3% 0.1958 264.38)",
+          "oklch(60.7% 0.1958 264.38)",
+          "oklch(72.1% 0.1958 264.38)",
+          "oklch(83.6% 0.1958 264.38)",
+          "oklch(95% 0.1958 264.38)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-accent-hover": {
+        "role": "primary",
+        "displayName": "proof accent hover",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.1737 264.45)",
+          "oklch(26.4% 0.1737 264.45)",
+          "oklch(37.9% 0.1737 264.45)",
+          "oklch(49.3% 0.1737 264.45)",
+          "oklch(60.7% 0.1737 264.45)",
+          "oklch(72.1% 0.1737 264.45)",
+          "oklch(83.6% 0.1737 264.45)",
+          "oklch(95% 0.1737 264.45)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-soft": {
+        "role": "neutral",
+        "displayName": "proof soft",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0182 269.09)",
+          "oklch(26.4% 0.0182 269.09)",
+          "oklch(37.9% 0.0182 269.09)",
+          "oklch(49.3% 0.0182 269.09)",
+          "oklch(60.7% 0.0182 269.09)",
+          "oklch(72.1% 0.0182 269.09)",
+          "oklch(83.6% 0.0182 269.09)",
+          "oklch(95% 0.0182 269.09)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-rail": {
+        "role": "neutral",
+        "displayName": "proof rail",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0029 264.54)",
+          "oklch(26.4% 0.0029 264.54)",
+          "oklch(37.9% 0.0029 264.54)",
+          "oklch(49.3% 0.0029 264.54)",
+          "oklch(60.7% 0.0029 264.54)",
+          "oklch(72.1% 0.0029 264.54)",
+          "oklch(83.6% 0.0029 264.54)",
+          "oklch(95% 0.0029 264.54)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-input": {
+        "role": "neutral",
+        "displayName": "proof input",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0029 264.54)",
+          "oklch(26.4% 0.0029 264.54)",
+          "oklch(37.9% 0.0029 264.54)",
+          "oklch(49.3% 0.0029 264.54)",
+          "oklch(60.7% 0.0029 264.54)",
+          "oklch(72.1% 0.0029 264.54)",
+          "oklch(83.6% 0.0029 264.54)",
+          "oklch(95% 0.0029 264.54)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-assumptions": {
+        "role": "neutral",
+        "displayName": "proof assumptions",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0045 258.32)",
+          "oklch(26.4% 0.0045 258.32)",
+          "oklch(37.9% 0.0045 258.32)",
+          "oklch(49.3% 0.0045 258.32)",
+          "oklch(60.7% 0.0045 258.32)",
+          "oklch(72.1% 0.0045 258.32)",
+          "oklch(83.6% 0.0045 258.32)",
+          "oklch(95% 0.0045 258.32)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-error-bg": {
+        "role": "semantic",
+        "displayName": "proof error bg",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0153 48.56)",
+          "oklch(26.4% 0.0153 48.56)",
+          "oklch(37.9% 0.0153 48.56)",
+          "oklch(49.3% 0.0153 48.56)",
+          "oklch(60.7% 0.0153 48.56)",
+          "oklch(72.1% 0.0153 48.56)",
+          "oklch(83.6% 0.0153 48.56)",
+          "oklch(95% 0.0153 48.56)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "proof-error-ink": {
+        "role": "semantic",
+        "displayName": "proof error ink",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.1217 41.05)",
+          "oklch(26.4% 0.1217 41.05)",
+          "oklch(37.9% 0.1217 41.05)",
+          "oklch(49.3% 0.1217 41.05)",
+          "oklch(60.7% 0.1217 41.05)",
+          "oklch(72.1% 0.1217 41.05)",
+          "oklch(83.6% 0.1217 41.05)",
+          "oklch(95% 0.1217 41.05)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "evaluation-success": {
+        "role": "semantic",
+        "displayName": "evaluation success",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0849 159.81)",
+          "oklch(26.4% 0.0849 159.81)",
+          "oklch(37.9% 0.0849 159.81)",
+          "oklch(49.3% 0.0849 159.81)",
+          "oklch(60.7% 0.0849 159.81)",
+          "oklch(72.1% 0.0849 159.81)",
+          "oklch(83.6% 0.0849 159.81)",
+          "oklch(95% 0.0849 159.81)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "evaluation-warning": {
+        "role": "semantic",
+        "displayName": "evaluation warning",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.0976 81.14)",
+          "oklch(26.4% 0.0976 81.14)",
+          "oklch(37.9% 0.0976 81.14)",
+          "oklch(49.3% 0.0976 81.14)",
+          "oklch(60.7% 0.0976 81.14)",
+          "oklch(72.1% 0.0976 81.14)",
+          "oklch(83.6% 0.0976 81.14)",
+          "oklch(95% 0.0976 81.14)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      },
+      "evaluation-error": {
+        "role": "semantic",
+        "displayName": "evaluation error",
+        "source": "src/styles/proof.css",
+        "tonalRamp": [
+          "oklch(15% 0.1543 24.76)",
+          "oklch(26.4% 0.1543 24.76)",
+          "oklch(37.9% 0.1543 24.76)",
+          "oklch(49.3% 0.1543 24.76)",
+          "oklch(60.7% 0.1543 24.76)",
+          "oklch(72.1% 0.1543 24.76)",
+          "oklch(83.6% 0.1543 24.76)",
+          "oklch(95% 0.1543 24.76)"
+        ],
+        "rampPurpose": "Synthesized panel visualization only; not an additional production token scale."
+      }
+    },
+    "typographyMeta": {
+      "body": {
+        "displayName": "Body",
+        "purpose": "Root reading text in the Proof shell.",
+        "source": ".lp-app"
+      },
+      "display": {
+        "displayName": "Page title",
+        "purpose": "Desktop page titles.",
+        "source": ".lp-app h1"
+      },
+      "display-mobile": {
+        "displayName": "Mobile page title",
+        "purpose": "Page titles at max-width 760px.",
+        "source": "@media (max-width:760px) .lp-app h1"
+      },
+      "section": {
+        "displayName": "Section heading",
+        "purpose": "Intake headings.",
+        "source": ".lp-app h2"
+      },
+      "stage-heading": {
+        "displayName": "Stage heading",
+        "purpose": "Current agent output heading.",
+        "source": ".detail-heading h2"
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Small section titles.",
+        "source": ".lp-app h3"
+      },
+      "document-title": {
+        "displayName": "Document title",
+        "purpose": "Problem name and variable names.",
+        "source": ".document-heading strong; .variable-definitions dt"
+      },
+      "empty-title": {
+        "displayName": "Empty-state title",
+        "purpose": "Describe unavailable stage output.",
+        "source": ".empty-output h3"
+      },
+      "conversation": {
+        "displayName": "Conversation",
+        "purpose": "Messages and explanatory prose.",
+        "source": ".message p"
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Fields, tabs and secondary actions.",
+        "source": ".field-label; .output-tabs button; .text-button"
+      },
+      "annotation": {
+        "displayName": "Annotation",
+        "purpose": "Footnotes, stage subtitles and event indices.",
+        "source": ".model-footnote; .stage-name small; .transcript > li > span"
+      },
+      "brand": {
+        "displayName": "Brand",
+        "purpose": "Desktop brand text.",
+        "source": ".lp-brand"
+      },
+      "brand-sub-mobile": {
+        "displayName": "Mobile brand subtitle",
+        "purpose": "Identity metadata only at max-width 760px.",
+        "source": ".brand-sub"
+      },
+      "monogram": {
+        "displayName": "Monogram",
+        "purpose": "LP identity mark; 32px on phones.",
+        "source": ".lp-monogram"
+      },
+      "objective": {
+        "displayName": "Objective expression",
+        "purpose": "Mathematical objective with tabular numerals.",
+        "source": ".model-objective > p"
+      },
+      "objective-mobile": {
+        "displayName": "Mobile objective",
+        "purpose": "Objective expression at max-width 760px.",
+        "source": ".model-objective > p"
+      },
+      "input": {
+        "displayName": "Problem field",
+        "purpose": "Desktop editable statement.",
+        "source": ".prompt-panel textarea"
+      },
+      "input-mobile": {
+        "displayName": "Mobile input",
+        "purpose": "16px phone editing at max-width 760px.",
+        "source": ".prompt-panel textarea"
+      },
+      "code": {
+        "displayName": "Code",
+        "purpose": "Python and structured output.",
+        "source": ".code-output"
+      },
+      "equation": {
+        "displayName": "Equation",
+        "purpose": "Constraints and variable bounds.",
+        "source": ".equation code"
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "primary-action",
+        "value": "transform 160ms ease-out",
+        "purpose": "Press response with scale(0.98)."
+      },
+      {
+        "name": "working",
+        "value": "proof-spin 900ms linear infinite",
+        "purpose": "Busy state only; rotation from 0 to 360deg."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "370px"
+      },
+      {
+        "name": "stacked",
+        "value": "760px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "wide",
+        "value": "1600px"
+      }
+    ],
+    "accessibility": {
+      "focus": "3px solid var(--accent); outline-offset: 4px",
+      "reducedMotion": "Animation and transitions disabled; scroll-behavior:auto.",
+      "tabs": "Linked tabpanels, roving tabIndex, ArrowLeft/ArrowRight/Home/End.",
+      "status": "Polite conversation/status announcements, local error alerts, explicit history failure and retry states."
+    },
+    "evidence": {
+      "sourceFiles": [
+        "PRODUCT.md",
+        ".impeccable/lp-prototypes.md",
+        "src/styles/proof.css",
+        "src/app/_components/proof/Header.tsx",
+        "src/app/_components/proof/Workspace.tsx",
+        "src/app/_components/proof/use-solver.ts",
+        "src/app/evaluation/page.tsx"
+      ],
+      "tokenAuthority": "DESIGN.md frontmatter, extracted from the current Proof CSS. Metadata maps roles to source selectors; component snippets retain exact colors and typography with scoped-variable fallbacks.",
+      "detector": {
+        "runs": 1,
+        "result": "Font-size and color documentation advisories against the former multi-prototype canon.",
+        "resolution": "Documented the intentional current Proof sizes, surface colors and semantic evaluation text; removed the obsolete alternative ramps.",
+        "rerun": false
+      },
+      "review": {
+        "verdict": "Ship for the scored fixes",
+        "fixed": [
+          "Mobile dataset upload rows stack.",
+          "History list and detail errors expose explicit recovery and retry."
+        ]
+      },
+      "verification": {
+        "reportedBy": "Integration owner and independent reviewer",
+        "build": "npm run build passed",
+        "typecheck": "TypeScript passed",
+        "unit": "Four stream/reducer tests passed",
+        "browser": "Controlled NDJSON responses verified stages, revisions, output tabs, keyboard navigation, errors, retry, cancellation, export, responsiveness, and history failure/empty/list/detail recovery.",
+        "liveModelAndRunner": true,
+        "liveEvidence": "2026-10-06: one unmocked Playwright MCP workflow completed all five stages with DeepSeek and the existing Railway runner; chairs=30, desks=5, optimum=1550. Database persistence remains unverified."
+      },
+      "delivery": {
+        "preview": "http://127.0.0.1:3092",
+        "pushed": false,
+        "deployed": false,
+        "figma": "Unavailable because the previous quota was exhausted; no LP artifact."
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Understand problem or solve a confirmed model.",
+      "html": "<button class=\"ds-primary\">Understand problem</button>",
+      "css": ".ds-primary{font-family:\"Public Sans Variable\",sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:12px 18px;border:0;border-radius:8px;background:var(--accent,#2452cc);color:#fff;font-size:14px;line-height:1.6;font-weight:600;cursor:pointer;transition:transform 160ms ease-out}.ds-primary:hover:not(:disabled){background:#1c43ac}.ds-primary:focus-visible{outline:3px solid var(--accent,#2452cc);outline-offset:4px}.ds-primary:active:not(:disabled){transform:scale(.98)}.ds-primary:disabled{opacity:.5;cursor:not-allowed}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Text action",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Secondary actions such as a new problem, retry or export.",
+      "html": "<button class=\"ds-text\">Export run</button>",
+      "css": ".ds-text{font-family:\"Public Sans Variable\",sans-serif;display:inline-flex;gap:8px;align-items:center;justify-content:center;border:0;background:transparent;color:var(--ink,#172b42);padding:9px 0;font-size:12px;line-height:1.6;font-weight:550;cursor:pointer}.ds-text:hover:not(:disabled){text-decoration:underline;text-underline-offset:4px}.ds-text:focus-visible{outline:3px solid var(--accent,#2452cc);outline-offset:4px}.ds-text:active:not(:disabled){transform:scale(.98)}.ds-text:disabled{opacity:.5;cursor:not-allowed}"
+    },
+    {
+      "name": "Problem field",
+      "kind": "input",
+      "refersTo": "input-problem",
+      "description": "A labelled native textarea with comfortable phone editing.",
+      "html": "<label class=\"ds-label\" for=\"ds-problem\">Describe what you want to optimise</label><textarea class=\"ds-field\" id=\"ds-problem\" placeholder=\"What are you deciding?\"></textarea>",
+      "css": ".ds-label{font-family:\"Public Sans Variable\",sans-serif;display:block;margin:20px 0 8px;color:var(--muted,#5f6c7b);font-size:12px}.ds-field{font-family:\"Public Sans Variable\",sans-serif;width:100%;min-height:310px;resize:vertical;padding:14px;border:1px solid var(--line,#d9e0e9);border-radius:8px;background:#fcfdff;color:var(--ink,#172b42);caret-color:var(--accent,#2452cc);font-size:14px;line-height:1.8}.ds-field::placeholder{color:var(--muted,#5f6c7b)}.ds-field:focus-visible{outline:3px solid var(--accent,#2452cc);outline-offset:4px}@media(max-width:1100px){.ds-field{min-height:160px}}@media(max-width:760px){.ds-field{min-height:235px;font-size:16px}}"
+    },
+    {
+      "name": "Stage navigation",
+      "kind": "nav",
+      "refersTo": "stage-active",
+      "description": "Ordered wayfinding through actual agent output.",
+      "html": "<nav class=\"ds-stages\" aria-label=\"Agent stages\"><button class=\"ds-stage\">Understand</button><button class=\"ds-stage\" aria-current=\"step\">Formulate</button><button class=\"ds-stage\">Review</button><button class=\"ds-stage\">Execute</button><button class=\"ds-stage\">Explain</button></nav>",
+      "css": ".ds-stages{display:flex;flex-direction:column;gap:8px}.ds-stage{font-family:\"Public Sans Variable\",sans-serif;border:0;background:transparent;color:var(--muted,#5f6c7b);text-align:left;padding:16px 12px;border-radius:8px;font-size:14px;line-height:1.5;font-weight:600;cursor:pointer}.ds-stage:hover{background:var(--soft,#edf2ff);color:var(--ink,#172b42)}.ds-stage[aria-current]{background:var(--soft,#edf2ff);color:var(--accent,#2452cc)}.ds-stage:focus-visible{outline:3px solid var(--accent,#2452cc);outline-offset:4px}.ds-stage:active{transform:scale(.98)}@media(max-width:760px){.ds-stages{flex-direction:row;gap:4px}.ds-stage{flex:1;min-height:44px;padding:12px 3px;font-size:11px;text-align:center}}"
+    },
+    {
+      "name": "Document",
+      "kind": "card",
+      "refersTo": "document",
+      "description": "A flat structured surface for the problem and its evidence.",
+      "html": "<section class=\"ds-document\"><div class=\"ds-heading\"><strong>Untitled problem</strong><span>Linear programming</span></div><div class=\"ds-document-body\">The model, Python code and explanation will appear here as the agents work.</div></section>",
+      "css": ".ds-document{font-family:\"Public Sans Variable\",sans-serif;border:1px solid var(--line,#d9e0e9);border-radius:12px;background:var(--surface,#fff);color:var(--ink,#172b42);overflow:hidden;font-size:14px;line-height:1.6}.ds-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--line,#d9e0e9);padding:20px 28px}.ds-heading strong{font-size:15px;font-weight:600;overflow-wrap:anywhere}.ds-heading span{font-size:11px;color:var(--muted,#5f6c7b)}.ds-document-body{padding:28px;color:var(--muted,#5f6c7b)}@media(max-width:760px){.ds-heading{padding:18px 20px;flex-direction:column;align-items:flex-start;gap:4px}.ds-document-body{padding:24px 20px}}"
+    },
+    {
+      "name": "Code evidence",
+      "kind": "custom",
+      "description": "Preformatted solver output with wrapping and a soft cobalt surface.",
+      "html": "<pre class=\"ds-code\"><code># Generated Python appears here after formulation.</code></pre>",
+      "css": ".ds-code{font-family:ui-monospace,monospace;font-size:12px;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink,#172b42);margin:0;padding:20px;background:var(--soft,#edf2ff);border-radius:8px;tab-size:4}"
+    },
+    {
+      "name": "Local error",
+      "kind": "custom",
+      "refersTo": "error",
+      "description": "Visible request feedback placed near its recovery action.",
+      "html": "<div class=\"ds-error\" role=\"alert\"><h3>Request needs attention</h3><p>The request could not be completed. Try the message again.</p></div>",
+      "css": ".ds-error{font-family:\"Public Sans Variable\",sans-serif;padding:16px;background:#fff3ed;color:#903d1b;margin-top:20px;border-radius:8px;font-size:12px;line-height:1.6}.ds-error h3{margin:0;font-size:12px;font-weight:600}.ds-error p{margin:8px 0 0;color:#903d1b}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Proof — mathematical proof workbench",
+    "overview": "Proof is the user-selected production identity, confirmed on 2026-10-06. A white document on cool paper keeps the problem and its evidence legible. Cobalt actions and ordered stage navigation guide attention; navy text, fine dividers and generous reading space keep the interface quiet.\n\nThe visual canon applies to the solver at `/` and the shared shell at `/evaluation`. Existing evaluator interiors retain their functional controls and semantic status treatments within that shell. The source of truth is `src/styles/proof.css`, with composition in `src/app/_components/proof` and `src/app/evaluation/page.tsx`. The former comparison directions and fixture interface have been removed.",
+    "keyCharacteristics": [
+      "White documents on cool paper with cobalt actions and navy text.",
+      "A persistent, ordered sequence of five inspectable agent stages.",
+      "Readable mathematical models, code revisions and chronological evidence.",
+      "Flat surfaces, restrained corners and immediate state changes.",
+      "Public Sans typography without raster decoration."
+    ],
+    "rules": [
+      {
+        "name": "The Evidence Color Rule",
+        "body": "Use status color with explicit text or an icon; a completed execution is not visual proof of an optimal solution.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do extend the selected Proof palette, Public Sans hierarchy and flat document structure.",
+      "Do retain visible focus, labelled inputs, accessible output tabs and reachable mobile controls.",
+      "Do use real stage evidence, explicit empty states and local error recovery.",
+      "Do keep evaluation, baseline and history workflows accessible in the shared shell."
+    ],
+    "donts": [
+      "Don't reintroduce the comparison picker, fixture replay, Contour or Relay as production patterns.",
+      "Don't treat execution completion or critic approval as a guarantee of an optimal result.",
+      "Don't replace inspectable outputs with decorative graphs or raster imagery.",
+      "Don't describe controlled browser responses as live model or Python runner validation."
+    ]
+  }
+}
